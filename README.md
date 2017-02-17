@@ -10,7 +10,7 @@ Once you have Postman open,
 - Import our [bbhub collection](bbhub.postman_collection), which contains templates of our API calls.
 - Import our [bbhub environment](bbhub.postman_environment), where you can input parameters like your email, password, client ID and tenant ID so you don't have to keep entering them. Here's a tutorial on using [Postman environments](https://www.getpostman.com/docs/environments).
 
-You can also import using the links to the raw file links from Github.
+You can also import to Postman using the raw file links from Github.
 
 ### Additional Parameters
 
