@@ -7,6 +7,8 @@ setup. You can download the Postman app [here](https://www.getpostman.com/).
 
 Once you have Postman open, import to Postman using the raw file links from this repository.
 
+![Import into Postman](import.png "Import into Postman")
+
 - Import our [bbhub collection](https://raw.githubusercontent.com/BitBrew/bbhub-postman/master/bbhub.postman_collection), which contains templates of our API calls.
 - Import our [bbhub environment](https://raw.githubusercontent.com/BitBrew/bbhub-postman/master/bbhub.postman_environment), where you can input parameters like your email, password, client ID and tenant ID so you don't have to keep entering them. Here's a tutorial on using [Postman environments](https://www.getpostman.com/docs/environments).
 
