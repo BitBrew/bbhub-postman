@@ -948,7 +948,7 @@
 					"response": []
 				},
 				{
-					"name": "Upload a File",
+					"name": "Upload File",
 					"request": {
 						"url": "{{protocol}}://{{url}}/v1/tenants/{{tenantId}}/configurationFolders/{{folderName}}/files",
 						"method": "POST",
@@ -1181,7 +1181,7 @@
 					"response": []
 				},
 				{
-					"name": "Upload a File",
+					"name": "Upload File",
 					"request": {
 						"url": "{{protocol}}://{{url}}/v1/tenants/{{tenantId}}/firmwareFolders/{{folderName}}/files",
 						"method": "POST",
