@@ -261,7 +261,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"deviceId\": \"{{deviceId}}\",\n    \"brokers\": [\n    \t{\n    \t\t\"type\": \"DanlawUdp\"\n    \t},\n        {\n            \"type\": \"DanlawTcp\",\n            \"commands\": \"{{commandSetName}}\",\n            \"imei\": \"{{imei}}\",\n            \"configurationFolderName\": \"{{folderName}}\",\n            \"firmwareFolderName\": \"{{folderName}}\"\n        },\n        {\n            \"type\": \"HTTP\"\n        }\n    ],\n    \"enabled\": true\n}"
+							"raw": "{\n    \"deviceId\": \"{{deviceId}}\",\n    \"brokers\": [\n    \t{\n    \t\t\"type\": \"DanlawUdp\"\n    \t},\n        {\n            \"type\": \"DanlawTcp\",\n            \"commands\": \"{{commandSetName}}\",\n            \"imei\": \"{{imei}}\",\n            \"configurationFolderName\": \"{{optionalFolderName}}\",\n            \"firmwareFolderName\": \"{{optionalFolderName}}\"\n        },\n        {\n            \"type\": \"HTTP\"\n        }\n    ],\n    \"enabled\": true\n}"
 						},
 						"description": "Create a new device."
 					},
@@ -391,7 +391,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"type\": \"DanlawTcp\",\n    \"commands\": \"sample\",\n    \"imei\": \"1\",\n    \"configurationFolderName\": \"cfgFolder\",\n    \"firmwareFolderName\": \"fwFolder\"\n}\n"
+							"raw": "{\n    \"type\": \"DanlawTcp\",\n    \"commands\": \"{{commandSetName}}\",\n    \"imei\": \"{{imei}}\",\n    \"configurationFolderName\": \"{{optionalFolderName}}\",\n    \"firmwareFolderName\": \"{{optionalFolderName}}\"\n}\n"
 						},
 						"description": "Update a device's broker information. For Danlaw TCP, this  may include the configuration or firmware folder you want associated with the device."
 					},
