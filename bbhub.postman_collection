@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "bbhub",
-		"_postman_id": "c9186d3f-e22f-bcad-12b0-d8bdf751d289",
+		"_postman_id": "33689387-2f0f-c913-0f26-f1f30ce82db9",
 		"description": "Sample API calls to manage all your platform resources.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -64,7 +64,7 @@
 								}
 							]
 						},
-						"description": "Requests an access token for a user"
+						"description": "Requests an access token for a user."
 					},
 					"response": []
 				},
@@ -121,7 +121,7 @@
 								}
 							]
 						},
-						"description": "Requests an access token for an app"
+						"description": "Requests a (longer-lived) access token for an app."
 					},
 					"response": []
 				}
@@ -147,7 +147,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"description": "View your list of Danlaw TCP command sets."
 					},
 					"response": []
 				},
@@ -172,7 +172,7 @@
 							"mode": "raw",
 							"raw": "{\n    \"name\": \"standard\",\n    \"description\": \"Get data and events.\",\n    \"commands\": {\n        \"0\": [\"#GET,DATA,D,0$\"],\n        \"1\": [\"#GET,DATA,D,0$\"],\n        \"2\": [\"#GET,DATA,D,0$\"],\n        \"3\": [\"#GET,DATA,E,0$\"],\n        \"4\": [\"#GET,DATA,D,0$\"],\n        \"5\": [\"#GET,DATA,D,0$\"],\n        \"6\": [\"#GET,DATA,D,0$\"],\n        \"7\": [\"#GET,DATA,D,0$\"],\n        \"8\": [\"#GET,DATA,D,0$\"],\n        \"9\": [\"#GET,DATA,D,0$\"]\n    }\n}"
 						},
-						"description": ""
+						"description": "Create a new command set to manage data retrieval from Danlaw devices that connect over Danlaw TCP."
 					},
 					"response": []
 				},
@@ -192,12 +192,12 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"description": "View the details of a Danlaw TCP command set."
 					},
 					"response": []
 				},
 				{
-					"name": "Delete Command Set",
+					"name": "Remove Command Set",
 					"request": {
 						"url": "{{protocol}}://{{url}}/v1/tenants/{{tenantId}}/commands/{{commandSetName}}",
 						"method": "DELETE",
@@ -212,7 +212,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"description": "Delete a command set from your list."
 					},
 					"response": []
 				}
@@ -238,7 +238,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"description": "View your list of devices."
 					},
 					"response": []
 				},
@@ -263,7 +263,7 @@
 							"mode": "raw",
 							"raw": "{\n    \"deviceId\": \"{{deviceId}}\",\n    \"brokers\": [\n    \t{\n    \t\t\"type\": \"DanlawUdp\"\n    \t},\n        {\n            \"type\": \"DanlawTcp\",\n            \"commands\": \"{{commandSetName}}\",\n            \"imei\": \"{{imei}}\",\n            \"configurationFolderName\": \"{{optionalFolderName}}\",\n            \"firmwareFolderName\": \"{{optionalFolderName}}\"\n        },\n        {\n            \"type\": \"HTTP\"\n        }\n    ],\n    \"enabled\": true\n}"
 						},
-						"description": ""
+						"description": "Create a new device."
 					},
 					"response": []
 				},
@@ -283,7 +283,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"description": "View details of a device, such as enablement status, tracing status, and broker information."
 					},
 					"response": []
 				},
@@ -303,7 +303,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"description": "Delete a device from your list."
 					},
 					"response": []
 				},
@@ -328,7 +328,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Device Broker",
+					"name": "Create a Device Broker",
 					"request": {
 						"url": "{{protocol}}://{{url}}/v1/tenants/{{tenantId}}/devices/{{deviceId}}/brokers",
 						"method": "POST",
@@ -346,9 +346,29 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"type\": \"DanlawTcp\",\n    \"commands\": \"{{commandSetName}}\",\n    \"imei\": \"{{imei}}\",\n    \"configurationFolderName\": \"{{optionalFolderName}}\",\n    \"firmwareFolderName\": \"{{optionalFolderName}}\"\n}"
+							"raw": "{\n    \"type\": \"DanlawTcp\",\n    \"commands\": \"sample\",\n    \"imei\": \"1\",\n    \"configurationFolderName\": \"cfgFolder\",\n    \"firmwareFolderName\": \"fwFolder\"\n}"
 						},
-						"description": ""
+						"description": "Add a new type of broker to a existing device. Only one of each broker type is allowed."
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Device Broker",
+					"request": {
+						"url": "{{protocol}}://{{url}}/v1/tenants/{{tenantId}}/devices/{{deviceId}}/brokers/{{brokerType}}",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Delete a broker from a device. The platform will no longer accept data sent across the protocol corresponding to the deleted broker."
 					},
 					"response": []
 				},
@@ -371,36 +391,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"type\": \"DanlawTcp\",\n    \"commands\": \"{{commandSetName}}\",\n    \"imei\": \"{{imei}}\",\n    \"configurationFolderName\": \"{{optionalFolderName}}\",\n    \"firmwareFolderName\": \"{{optionalFolderName}}\"\n}"
+							"raw": "{\n    \"type\": \"DanlawTcp\",\n    \"commands\": \"{{commandSetName}}\",\n    \"imei\": \"{{imei}}\",\n    \"configurationFolderName\": \"{{optionalFolderName}}\",\n    \"firmwareFolderName\": \"{{optionalFolderName}}\"\n}\n"
 						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Remove Device Broker",
-					"request": {
-						"url": "{{protocol}}://{{url}}/v1/tenants/{{tenantId}}/devices/{{deviceId}}/brokers/{{brokerType}}",
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"description": ""
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"description": "Update a device's broker information. For Danlaw TCP, this  may include the configuration or firmware folder you want associated with the device."
 					},
 					"response": []
 				},
 				{
 					"name": "View Device File Statuses",
 					"request": {
-						"url": "{{protocol}}://{{url}}/v1/tenants/{{tenantId}}/devices/{{deviceId}}/files/state",
+						"url": "{{protocol}}://{{url}}/v1/tenants/{{tenantId}}/devices/{{deviceId}}/files/status",
 						"method": "GET",
 						"header": [
 							{
@@ -413,12 +413,12 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"description": "View statuses related to Danlaw TCP firmware and configuration folders: whether the device is up to date, and whether it has failed to update the maximum allowed times."
 					},
 					"response": []
 				},
 				{
-					"name": "View Last Communication Dates for All Devices",
+					"name": "List Last Communication Dates for All Devices",
 					"request": {
 						"url": "{{protocol}}://{{url}}/v1/tenants/{{tenantId}}/last-communications",
 						"method": "GET",
@@ -433,7 +433,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"description": "View the list of all devices by ID and their last communication dates."
 					},
 					"response": []
 				},
@@ -453,7 +453,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"description": "View a device's last communication date and which protocol it used to connect to the server."
 					},
 					"response": []
 				},
@@ -481,7 +481,7 @@
 								}
 							]
 						},
-						"description": ""
+						"description": "View the list of devices linked to a specific firmware folder."
 					},
 					"response": []
 				},
@@ -509,7 +509,92 @@
 								}
 							]
 						},
-						"description": ""
+						"description": "View the list of devices linked to a specific configuration folder."
+					},
+					"response": []
+				},
+				{
+					"name": "Clear Firmware Update Failure Status",
+					"request": {
+						"url": "http://{{url}}:{{port}}/v1/tenants/{{tenantId}}/devices/1/firmware/retryStatus/reset",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Reset a device that has failed to update its firmware file the maximum number of times."
+					},
+					"response": []
+				},
+				{
+					"name": "Clear Configuration Update Failure Status",
+					"request": {
+						"url": "http://{{url}}:{{port}}/v1/tenants/{{tenantId}}/devices/1/configuration/retryStatus/reset",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Reset a device that has failed to update its configuration file the maximum number of times."
+					},
+					"response": []
+				},
+				{
+					"name": "Set Update Failure Limit",
+					"request": {
+						"url": "http://{{url}}:{{port}}/v1/tenants/{{tenantId}}/devices/files",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"updateFailureLimit\": 4\n}"
+						},
+						"description": "Set a limit for the number of failed file update attempts you want to allow before cancelling the update. The default is three."
+					},
+					"response": []
+				},
+				{
+					"name": "View Update Failure Limit",
+					"request": {
+						"url": "http://{{url}}:{{port}}/v1/tenants/{{tenantId}}/devices/files",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "View the limit you have set for the maximum number of failed file update attempts. Default is three."
 					},
 					"response": []
 				}
@@ -535,7 +620,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"description": "View your list of rules. "
 					},
 					"response": []
 				},
@@ -555,7 +640,7 @@
 							"mode": "raw",
 							"raw": "create rule {{ruleName}}\nusing json_body = { header = header, body = body }\nwhere true\nwith amqp(body = json(bindings.json_body))"
 						},
-						"description": ""
+						"description": "Create a rule that sends captured data to a queue for your app to consume."
 					},
 					"response": []
 				},
@@ -575,7 +660,7 @@
 							"mode": "raw",
 							"raw": "create rule {{ruleName}}\nusing json_body = { header = header, body = body }\nwhere true\nwith post(uri='{{postURL}}', body = json(bindings.json_body))"
 						},
-						"description": ""
+						"description": "Create a rule that sends captured data to a URL via HTTP [POST]."
 					},
 					"response": []
 				},
@@ -595,7 +680,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"description": "View a rule's text."
 					},
 					"response": []
 				},
@@ -615,7 +700,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": "Deletes the identified rule"
+						"description": "Delete a rule from your list."
 					},
 					"response": []
 				}
@@ -641,7 +726,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"description": "View a list of your queues."
 					},
 					"response": []
 				},
@@ -666,7 +751,7 @@
 							"mode": "raw",
 							"raw": "{\n    \"name\": \"{{queueName}}\",\n    \"rules\": [\"{{ruleName}}\"]\n}"
 						},
-						"description": ""
+						"description": "Create a new queue to receive data from the platform."
 					},
 					"response": []
 				},
@@ -686,7 +771,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"description": "View details about a queue, such as the rules it is linked to."
 					},
 					"response": []
 				},
@@ -706,7 +791,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"description": "Remove a queue from your list. Data sent from the platform will be discarded after deletion."
 					},
 					"response": []
 				}
@@ -740,7 +825,7 @@
 								}
 							]
 						},
-						"description": ""
+						"description": "View a list of your configuration folders."
 					},
 					"response": []
 				},
@@ -765,7 +850,7 @@
 							"mode": "raw",
 							"raw": "{ \"name\": \"{{folderName}}\" }"
 						},
-						"description": ""
+						"description": "Create a configuration folder to manage files and device updates."
 					},
 					"response": []
 				},
@@ -793,7 +878,7 @@
 								}
 							]
 						},
-						"description": ""
+						"description": "View details of a configuration folder, such as the number of contained files and the name of the active file."
 					},
 					"response": []
 				},
@@ -818,7 +903,7 @@
 							"mode": "raw",
 							"raw": "{ \"activeFileName\": \"{{fileName}}\" }"
 						},
-						"description": ""
+						"description": "Update a configuration folder's active file. The active file is the one you want running on all devices linked to this folder."
 					},
 					"response": []
 				},
@@ -838,7 +923,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"description": "Delete a configuration folder from your list. All contained files will also be deleted."
 					},
 					"response": []
 				},
@@ -854,13 +939,16 @@
 								"description": ""
 							}
 						],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "View a list of configuration files in a specific folder."
 					},
 					"response": []
 				},
 				{
-					"name": "File Upload",
+					"name": "Upload File",
 					"request": {
 						"url": "{{protocol}}://{{url}}/v1/tenants/{{tenantId}}/configurationFolders/{{folderName}}/files",
 						"method": "POST",
@@ -891,7 +979,7 @@
 								}
 							]
 						},
-						"description": ""
+						"description": "Upload a configuration file to a selected folder."
 					},
 					"response": []
 				},
@@ -907,8 +995,11 @@
 								"description": ""
 							}
 						],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "View details about a configuration file, such as size."
 					},
 					"response": []
 				},
@@ -924,8 +1015,11 @@
 								"description": ""
 							}
 						],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Delete a configuration file from a specific folder. Any devices currently running this file will not be impacted."
 					},
 					"response": []
 				}
@@ -959,7 +1053,7 @@
 								}
 							]
 						},
-						"description": ""
+						"description": "View a list of your firmware folders."
 					},
 					"response": []
 				},
@@ -984,7 +1078,7 @@
 							"mode": "raw",
 							"raw": "{ \"name\": \"{{folderName}}\" }"
 						},
-						"description": ""
+						"description": "Create a firmware folder to manage files and device updates."
 					},
 					"response": []
 				},
@@ -1012,7 +1106,7 @@
 								}
 							]
 						},
-						"description": ""
+						"description": "View details of a firmware folder, such as the number of contained files and the name of the active file."
 					},
 					"response": []
 				},
@@ -1037,7 +1131,7 @@
 							"mode": "raw",
 							"raw": "{ \"activeFileName\": \"{{fileName}}\" }"
 						},
-						"description": ""
+						"description": "Update a firmware folder's active file. The active file is the one you want running on all devices linked to this folder."
 					},
 					"response": []
 				},
@@ -1062,7 +1156,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"description": "Delete a firmware folder from your list. All contained files will also be deleted."
 					},
 					"response": []
 				},
@@ -1078,13 +1172,16 @@
 								"description": ""
 							}
 						],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "View a list of firmware files in a specific folder."
 					},
 					"response": []
 				},
 				{
-					"name": "File Upload",
+					"name": "Upload File",
 					"request": {
 						"url": "{{protocol}}://{{url}}/v1/tenants/{{tenantId}}/firmwareFolders/{{folderName}}/files",
 						"method": "POST",
@@ -1115,7 +1212,7 @@
 								}
 							]
 						},
-						"description": ""
+						"description": "Upload a firmware file to a selected folder."
 					},
 					"response": []
 				},
@@ -1131,8 +1228,11 @@
 								"description": ""
 							}
 						],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "View details about a firmware file, such as size."
 					},
 					"response": []
 				},
@@ -1148,19 +1248,22 @@
 								"description": ""
 							}
 						],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Delete a firmware file from a specific folder. Any devices currently running this file will not be impacted."
 					},
 					"response": []
 				}
 			]
 		},
 		{
-			"name": "Tenant Ops",
+			"name": "Tenant Operations",
 			"description": "",
 			"item": [
 				{
-					"name": "Get Tenant Info",
+					"name": "View Tenant Info",
 					"request": {
 						"url": "{{protocol}}://{{url}}/v1/tenants/{{tenantId}}",
 						"method": "GET",
@@ -1175,7 +1278,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"description": "View information about your tenant, such as ID, name, and creation date."
 					},
 					"response": []
 				}
@@ -1186,7 +1289,7 @@
 			"description": "",
 			"item": [
 				{
-					"name": "Get User List",
+					"name": "List Users",
 					"request": {
 						"url": "{{protocol}}://{{url}}/v1/admin/users",
 						"method": "GET",
@@ -1201,12 +1304,12 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": "Gets the list of registered users"
+						"description": "View a list of your tenant's registered users."
 					},
 					"response": []
 				},
 				{
-					"name": "Get User by Email",
+					"name": "View User by Email",
 					"request": {
 						"url": "{{protocol}}://{{url}}/v1/admin/users?email={{email}}",
 						"method": "GET",
@@ -1221,12 +1324,12 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": "Gets a specific user by email with all permissions."
+						"description": "View a user's details, such as user ID, role, and permissions."
 					},
 					"response": []
 				},
 				{
-					"name": "Add User",
+					"name": "Create User",
 					"request": {
 						"url": "{{protocol}}://{{url}}/v1/admin/users",
 						"method": "POST",
@@ -1246,7 +1349,7 @@
 							"mode": "raw",
 							"raw": "{\n    \"email\":\"me@google.com\",\n    \"password\" : \"mypassword\",\n    \"roles\": [ \"tenantAdmin\" ]\n}"
 						},
-						"description": "Adds a User to the system"
+						"description": "Add a new user to your tenant."
 					},
 					"response": []
 				},
@@ -1266,7 +1369,7 @@
 							"mode": "raw",
 							"raw": "newPassword"
 						},
-						"description": "Change the user's password"
+						"description": "Change the user's password."
 					},
 					"response": []
 				},
@@ -1286,7 +1389,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": "Deletes a User from the system (by providing its Id) "
+						"description": "Delete a user from the system."
 					},
 					"response": []
 				}
