@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "bbhub",
-		"_postman_id": "33689387-2f0f-c913-0f26-f1f30ce82db9",
+		"_postman_id": "b0d3ee96-b17b-6091-dd3c-989ad0c8565b",
 		"description": "Sample API calls to manage all your platform resources.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -13,63 +13,6 @@
 			"item": [
 				{
 					"name": "Get Access Token",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"var jsonData = JSON.parse(responseBody);",
-									"",
-									"tests[\"Token Created\"] = typeof jsonData.accessToken != 'undefined'",
-									"",
-									"if(typeof jsonData.accessToken != 'undefined') {",
-									"    postman.setEnvironmentVariable(\"token\", jsonData.accessToken);",
-									"    tests[\"Token Set\"] = jsonData.accessToken === postman.getEnvironmentVariable(\"token\");",
-									"}"
-								]
-							}
-						}
-					],
-					"request": {
-						"url": "{{protocol}}://{{url}}/v1/token",
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "grant_type",
-									"value": "password",
-									"type": "text",
-									"enabled": true
-								},
-								{
-									"key": "username",
-									"value": "{{email}}",
-									"type": "text",
-									"enabled": true
-								},
-								{
-									"key": "password",
-									"value": "{{password}}",
-									"type": "text",
-									"enabled": true
-								},
-								{
-									"key": "client_id",
-									"value": "{{clientId}}",
-									"type": "text",
-									"enabled": true
-								}
-							]
-						},
-						"description": "Requests an access token for a user."
-					},
-					"response": []
-				},
-				{
-					"name": "Get Access Token (app)",
 					"event": [
 						{
 							"listen": "test",
