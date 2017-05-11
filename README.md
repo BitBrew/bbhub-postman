@@ -25,9 +25,8 @@ Contact the BitBrew team to request access to the APIs.
 You'll need to put the following information into the Postman environment
 variables to make calls in the collection.
 
-- Username
-- Password
 - Client ID
+- Client Secret
 - Tenant ID
 
 ## Documentation
