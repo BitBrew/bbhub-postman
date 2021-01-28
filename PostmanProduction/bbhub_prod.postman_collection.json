@@ -1,16 +1,20 @@
 {
+	"variables": [],
 	"info": {
-		"_postman_id": "999144f0-0b93-49c7-b389-f571d6e70466",
-		"name": "SuperAdmin Copy",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"name": "bbhub",
+		"_postman_id": "641ba36c-d01f-ddf5-dabd-3831c16989bb",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Analytics",
+			"description": "",
 			"item": [
 				{
 					"name": "List Rules",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules",
 						"method": "GET",
 						"header": [
 							{
@@ -22,8 +26,19 @@
 								"value": "Bearer {{token}}"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "View Rule",
+					"request": {
 						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules",
+							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules/AllEvents?",
 							"host": [
 								"{{protocol}}{{url}}{{port}}"
 							],
@@ -31,15 +46,18 @@
 								"v1",
 								"tenants",
 								"{{tenantId}}",
-								"rules"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "View Rule",
-					"request": {
+								"rules",
+								"AllEvents"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							],
+							"variable": []
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -57,32 +75,18 @@
 								"disabled": true
 							}
 						],
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules/AllEvents",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"rules",
-								"AllEvents"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": "",
-									"disabled": true
-								}
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Create Post Rule",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules",
 						"method": "POST",
 						"header": [
 							{
@@ -98,24 +102,14 @@
 							"mode": "raw",
 							"raw": "create rule gps\nusing  post_body = { notificationType = 'gps'\n                   , deviceId = header.deviceId\n                   , data =\n                       { latitude = body.pidData?.GpsReading?.latitude?\n                       , longitude = body.pidData?.GpsReading?.longitude?\n                       }\n                   , header = body.pidData?.GpsReading?.gps?.heading?\n                   }\n,      bin_id = '127dw6f1'\nwhere  eq(body.type, 'TripData')\nwith   post(uri=s'http://requestb.in/${bindings.bin_id}', body= json(bindings.post_body))\n"
 						},
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"rules"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Create AMQP Rule",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules",
 						"method": "POST",
 						"header": [
 							{
@@ -127,53 +121,28 @@
 							"mode": "raw",
 							"raw": "create rule AllEvents using my_map = { body = body, header = header } where true with amqp(body = json(bindings.my_map))\n"
 						},
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"rules"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Create Destination Rule",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules",
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "create rule DynamoDB\nusing itemBody = { body = body, header = header }\nwhere true\nwith Destination(\n  item = json(bindings.itemBody),\n  destinationId = '8b6a45a7-fdd5-4b54-a259-3b6955d1766c'\n)",
-							"options": {
-								"raw": {
-									"language": "text"
-								}
-							}
+							"raw": "create rule DynamoDB\nusing itemBody = { body = body, header = header }\nwhere true\nwith Destination(\n  item = json(bindings.itemBody),\n  destinationId = '8b6a45a7-fdd5-4b54-a259-3b6955d1766c'\n)"
 						},
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"rules"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Create Hashed Exchange Rule",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules",
 						"method": "POST",
 						"header": [
 							{
@@ -185,24 +154,14 @@
 							"mode": "raw",
 							"raw": "create rule AllEvents using my_map = { body = body, header = header } where true with amqp(body = json(bindings.my_map), exchange='x-hash', key=header.deviceId)"
 						},
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"rules"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Update Rule",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules/AllEvents",
 						"method": "PUT",
 						"header": [
 							{
@@ -218,25 +177,14 @@
 							"mode": "raw",
 							"raw": "{\n\t\"enabled\": false,\n\t\"text\": \"create rule AllEvents using my_map = { body = body, header = header } where true with amqp(body = json(bindings.my_map))\"\n}"
 						},
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules/AllEvents",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"rules",
-								"AllEvents"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Enable/DisableRule",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules/AllEvents",
 						"method": "PUT",
 						"header": [
 							{
@@ -252,25 +200,14 @@
 							"mode": "raw",
 							"raw": "{\n    \"enabled\":false\n}\n"
 						},
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules/AllEvents",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"rules",
-								"AllEvents"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Update Rule Syntax",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules/AllEvents",
 						"method": "PUT",
 						"header": [
 							{
@@ -286,25 +223,14 @@
 							"mode": "raw",
 							"raw": "{\"text\":\"rule AllEvents\\nusing myMap = {\\n  header = hessader,\\n  body = body\\n}\\nwhere contains(header.tags, 'banana')\\nwith amqp(body = json(bindings.myMap))\"}"
 						},
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules/AllEvents",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"rules",
-								"AllEvents"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Delete Rule",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules/AllEvents",
 						"method": "DELETE",
 						"header": [
 							{
@@ -316,25 +242,14 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/rules/AllEvents",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"rules",
-								"AllEvents"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "List Queues",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/queues",
 						"method": "GET",
 						"header": [
 							{
@@ -346,24 +261,18 @@
 								"value": "Bearer {{token}}"
 							}
 						],
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/queues",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"queues"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "List Hashed Exchanges",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/hashed-exchanges",
 						"method": "GET",
 						"header": [
 							{
@@ -375,24 +284,18 @@
 								"value": "Bearer {{token}}"
 							}
 						],
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/hashed-exchanges",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"hashed-exchanges"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "View Queue",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/queues/AllEvents",
 						"method": "GET",
 						"header": [
 							{
@@ -404,25 +307,18 @@
 								"value": "Bearer {{token}}"
 							}
 						],
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/queues/AllEvents",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"queues",
-								"AllEvents"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "View Hashed Exchange",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/hashed-exchanges/x-hash",
 						"method": "GET",
 						"header": [
 							{
@@ -434,25 +330,18 @@
 								"value": "Bearer {{token}}"
 							}
 						],
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/hashed-exchanges/x-hash",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"hashed-exchanges",
-								"x-hash"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Create Queue (rules)",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/queues",
 						"method": "POST",
 						"header": [
 							{
@@ -468,24 +357,14 @@
 							"mode": "raw",
 							"raw": "{\n    \"name\": \"AllEven12ts\",\n    \"rules\": [\"AllEvents\"]\n}"
 						},
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/queues",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"queues"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Update Queue(rule/device)",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/queues",
 						"method": "PUT",
 						"header": [
 							{
@@ -501,24 +380,14 @@
 							"mode": "raw",
 							"raw": "{\"name\":\"AllEvent\",\n\"rules\":[\"AllEvents\",\"AllEvents2\"]}"
 						},
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/queues",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"queues"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Create Hashed Exchange",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/hashed-exchanges",
 						"method": "POST",
 						"header": [
 							{
@@ -534,24 +403,14 @@
 							"mode": "raw",
 							"raw": "{\n    \"name\": \"x-hash\",\n    \"numQueues\": 5\n}"
 						},
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/hashed-exchanges",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"hashed-exchanges"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Create Queue (devices)",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/queues",
 						"method": "POST",
 						"header": [
 							{
@@ -567,24 +426,14 @@
 							"mode": "raw",
 							"raw": "{\n    \"name\": \"amqQueueDevices\",\n    \"devices\": [\"x\", \"z\"]\n}"
 						},
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/queues",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"queues"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Create Queue (unmanaged)",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/queues",
 						"method": "POST",
 						"header": [
 							{
@@ -600,24 +449,14 @@
 							"mode": "raw",
 							"raw": "{\n    \"name\": \"amqQueueUnmanaged\",\n    \"unmanaged\": true\n}"
 						},
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/queues",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"queues"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Delete Queue",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/queues/AllEvents",
 						"method": "DELETE",
 						"header": [
 							{
@@ -633,25 +472,14 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/queues/AllEvents",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"queues",
-								"AllEvents"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Delete Hashed Exchange",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/hashed-exchanges/x-hash",
 						"method": "DELETE",
 						"header": [
 							{
@@ -667,25 +495,14 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/hashed-exchanges/x-hash",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"hashed-exchanges",
-								"x-hash"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Update Hashed Exchange",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/hashed-exchanges/x-hash",
 						"method": "PUT",
 						"header": [
 							{
@@ -701,59 +518,35 @@
 							"mode": "raw",
 							"raw": "{\n\t\"numQueues\": 1\n}"
 						},
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/hashed-exchanges/x-hash",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"tenants",
-								"{{tenantId}}",
-								"hashed-exchanges",
-								"x-hash"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Version(Remove)",
 					"request": {
+						"url": "http://{{analyticsUrl}}:{{analyticsPort}}/v1/version",
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://{{analyticsUrl}}:{{analyticsPort}}/v1/version",
-							"protocol": "http",
-							"host": [
-								"{{analyticsUrl}}"
-							],
-							"port": "{{analyticsPort}}",
-							"path": [
-								"v1",
-								"version"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Health Check(remove)",
 					"request": {
+						"url": "http://{{analyticsUrl}}:{{analyticsPort}}/v1/health",
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://{{analyticsUrl}}:{{analyticsPort}}/v1/health",
-							"protocol": "http",
-							"host": [
-								"{{analyticsUrl}}"
-							],
-							"port": "{{analyticsPort}}",
-							"path": [
-								"v1",
-								"health"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				}
@@ -761,50 +554,40 @@
 		},
 		{
 			"name": "Ingestion",
+			"description": "",
 			"item": [
 				{
 					"name": "Version(remove)",
 					"request": {
+						"url": "http://{{ingestionUrl}}:{{ingestionPort}}/v1/version",
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://{{ingestionUrl}}:{{ingestionPort}}/v1/version",
-							"protocol": "http",
-							"host": [
-								"{{ingestionUrl}}"
-							],
-							"port": "{{ingestionPort}}",
-							"path": [
-								"v1",
-								"version"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Health Check(remove)",
 					"request": {
+						"url": "http://{{ingestionUrl}}:{{ingestionPort}}/v1/health",
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://{{ingestionUrl}}:{{ingestionPort}}/v1/health",
-							"protocol": "http",
-							"host": [
-								"{{ingestionUrl}}"
-							],
-							"port": "{{ingestionPort}}",
-							"path": [
-								"v1",
-								"health"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Send Device Event",
 					"request": {
+						"url": "http://{{deviceUrl}}:{{deviceHttpPort}}/v1/event",
 						"method": "POST",
 						"header": [
 							{
@@ -820,18 +603,6 @@
 							"mode": "raw",
 							"raw": "{\n    \"deviceId\": \"1\", \n    \"payload\": {}\n}"
 						},
-						"url": {
-							"raw": "http://{{deviceUrl}}:{{deviceHttpPort}}/v1/event",
-							"protocol": "http",
-							"host": [
-								"{{deviceUrl}}"
-							],
-							"port": "{{deviceHttpPort}}",
-							"path": [
-								"v1",
-								"event"
-							]
-						},
 						"description": "1. It is backend API.\n2. It is used to ingest TCP and UDP data to the http broker type devices.\n3. In the body , pass the device id and payload as device data."
 					},
 					"response": []
@@ -840,13 +611,16 @@
 		},
 		{
 			"name": "Management",
+			"description": "",
 			"item": [
 				{
 					"name": "Device Ops",
+					"description": "",
 					"item": [
 						{
 							"name": "List Devices",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices",
 								"method": "GET",
 								"header": [
 									{
@@ -854,31 +628,17 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "List Device (Paging)",
 							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}"
-									}
-								],
 								"url": {
 									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices?pageNo=1&pageSize=10",
 									"host": [
@@ -899,14 +659,9 @@
 											"key": "pageSize",
 											"value": "10"
 										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "View Device",
-							"request": {
+									],
+									"variable": []
+								},
 								"method": "GET",
 								"header": [
 									{
@@ -914,18 +669,28 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1"
-									]
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "View Device",
+							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
 								},
 								"description": "1. This API is front end  API.\n2. It is used  to view  details about an individual tag  in a particular tenant.\n3. Pass valid tenant id in environment variable- tenantId\n4. Pass valid tagid in the value of Path valrible to execute this API."
 							},
@@ -934,6 +699,7 @@
 						{
 							"name": "Create Device",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices",
 								"method": "POST",
 								"header": [
 									{
@@ -949,24 +715,14 @@
 									"mode": "raw",
 									"raw": "{\n    \"deviceId\": \"1\",\n    \"brokers\": [\n        {\n            \"type\": \"DanlawTcp\",\n            \"imei\": \"1\",\n            \"configurationFolderName\": \"cfgFolder\",\n            \"firmwareFolderName\": \"fwFolder\"\n        },\n        {\n            \"type\": \"DanlawUdp\"\n        }\n    ],\n    \"tracing\": \"full\",\n    \"enabled\": true,\n    \"tags\":[\"1773c3f2-6de6-4963-af6f-1b1fb6b49d81\",\"7fb9ad61-38a2-4b25-9dab-9caafa8ebd04\"]\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Bulk Create Device",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices-bulk",
 								"method": "POST",
 								"header": [
 									{
@@ -982,24 +738,14 @@
 									"mode": "raw",
 									"raw": "{\n     \n  \"devices\": [\n    {\n      \"deviceId\": \"1\",\n      \"brokers\": [\n          {\n              \"type\": \"DanlawTcp\",\n              \"imei\": \"1\",\n              \"configurationFolderName\": \"cfgFolder\",\n              \"firmwareFolderName\": \"fwFolder\"\n          },\n          {\n              \"type\": \"DanlawUdp\"\n          }\n      ],\n      \"tracing\": \"full\",\n      \"enabled\": true\n    },{\n      \"deviceId\": \"2\",\n      \"brokers\": [\n          {\n              \"type\": \"DanlawTcp\",\n              \"imei\": \"2\",\n              \"configurationFolderName\": \"cfgFolder\",\n              \"firmwareFolderName\": \"fwFolder\"\n          },\n          {\n              \"type\": \"DanlawUdp\"\n          }\n      ],\n      \"tracing\": \"full\",\n      \"enabled\": true\n    },{\n      \"deviceId\": \"3\",\n      \"brokers\": [\n          {\n              \"type\": \"DanlawTcp\",\n              \"imei\": \"3\",\n              \"configurationFolderName\": \"cfgFolder\",\n              \"firmwareFolderName\": \"fwFolder\"\n          },\n          {\n              \"type\": \"DanlawUdp\"\n          }\n      ],\n      \"tracing\": \"full\",\n      \"enabled\": true\n    }\n  ],\n  \"tags\":[\"1773c3f2-6de6-4963-af6f-1b1fb6b49d81\",\"7fb9ad61-38a2-4b25-9dab-9caafa8ebd04\"]\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices-bulk",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices-bulk"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Remove Device",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1",
 								"method": "DELETE",
 								"header": [
 									{
@@ -1015,25 +761,14 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Bulk Remove Device",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices",
 								"method": "DELETE",
 								"header": [
 									{
@@ -1049,24 +784,14 @@
 									"mode": "raw",
 									"raw": "{\n\t\"deviceIds\": [\n\t\t\"1\",\n\t\t\"2\",\n\t\t\"3\"\n\t]\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Bulk Update Device",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices-bulk",
 								"method": "PUT",
 								"header": [
 									{
@@ -1082,24 +807,14 @@
 									"mode": "raw",
 									"raw": "{\n\t\"devices\": [\n\t\t{\n\t\t\t\"deviceId\": \"1\",\n\t\t\t\"enabled\": true,\n\t\t\t\"tracing\": \"disabled\"\n\t\t},\n\t\t{\n\t\t\t\"deviceId\": \"2\",\n\t\t\t\"enabled\": false,\n\t\t\t\"tracing\": \"minimal\"\n\t\t}\n\t]\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices-bulk",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices-bulk"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "List Devices' Last Communications",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/last-communications",
 								"method": "GET",
 								"header": [
 									{
@@ -1107,24 +822,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/last-communications",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"last-communications"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "View Device's Last Communications",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/last-communications",
 								"method": "GET",
 								"header": [
 									{
@@ -1132,26 +841,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/last-communications",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1",
-										"last-communications"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Enable Device",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1",
 								"method": "PUT",
 								"header": [
 									{
@@ -1167,25 +868,14 @@
 									"mode": "raw",
 									"raw": "{\n\t\"enabled\": true\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Disable Device",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1",
 								"method": "PUT",
 								"header": [
 									{
@@ -1201,19 +891,6 @@
 									"mode": "raw",
 									"raw": "{\n\t\"enabled\": false\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1"
-									]
-								},
 								"description": "1. It is fron end API.\n2. It is used to disabled any enabled   device in a particuar tenant.\n3. Pass the valid tenant id in the environment varaible.\n4. In the Body, pass enabled as false to enbale the device.\n5. Pass the device id (to disable ) in the path variable value."
 							},
 							"response": []
@@ -1221,6 +898,7 @@
 						{
 							"name": "View Device Broker Info",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/brokers",
 								"method": "GET",
 								"header": [
 									{
@@ -1228,26 +906,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/brokers",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1",
-										"brokers"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Create Device Broker",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/brokers",
 								"method": "POST",
 								"header": [
 									{
@@ -1263,26 +933,14 @@
 									"mode": "raw",
 									"raw": "{\n    \"type\": \"DanlawTcp\",\n    \"imei\": \"343445\",\n    \"configurationFolderName\": \"cfgFolder\",\n    \"firmwareFolderName\": \"fwFolder\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/brokers",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1",
-										"brokers"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Update Device Broker",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/brokers/DanlawTcp",
 								"method": "PUT",
 								"header": [
 									{
@@ -1298,27 +956,14 @@
 									"mode": "raw",
 									"raw": "{\n    \"imei\": \"1\",\n    \"configurationFolderName\": \"cfgFolder\",\n    \"firmwareFolderName\": \"fwFolder\"\n}\n"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/brokers/DanlawTcp",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1",
-										"brokers",
-										"DanlawTcp"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Delete Device Broker",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/brokers/DanlawTcp",
 								"method": "DELETE",
 								"header": [
 									{
@@ -1330,27 +975,14 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/brokers/DanlawTcp",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1",
-										"brokers",
-										"DanlawTcp"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Enable Device Tracing (minimal)",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1",
 								"method": "PUT",
 								"header": [
 									{
@@ -1366,25 +998,14 @@
 									"mode": "raw",
 									"raw": "{\n\t\"tracing\": \"minimal\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Enable Device Tracing (full)",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1",
 								"method": "PUT",
 								"header": [
 									{
@@ -1400,25 +1021,14 @@
 									"mode": "raw",
 									"raw": "{\n\t\"tracing\": \"full\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Disable Device Tracing",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1",
 								"method": "PUT",
 								"header": [
 									{
@@ -1434,25 +1044,14 @@
 									"mode": "raw",
 									"raw": "{\n\t\"tracing\": \"disabled\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "View Device Tracing Events",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/tracing",
 								"method": "GET",
 								"header": [
 									{
@@ -1460,26 +1059,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/tracing",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1",
-										"tracing"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Download Raw Tracing Event",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/tracing/dbc28fc0-5eed-11e6-a670-77c27dd5fa5e/raw",
 								"method": "GET",
 								"header": [
 									{
@@ -1487,28 +1078,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/tracing/dbc28fc0-5eed-11e6-a670-77c27dd5fa5e/raw",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1",
-										"tracing",
-										"dbc28fc0-5eed-11e6-a670-77c27dd5fa5e",
-										"raw"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "View Device Tracing Events Within Time Range",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/tracing/from/2016-08-01/to/2016-09-01",
 								"method": "GET",
 								"header": [
 									{
@@ -1516,30 +1097,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/tracing/from/2016-08-01/to/2016-09-01",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1",
-										"tracing",
-										"from",
-										"2016-08-01",
-										"to",
-										"2016-09-01"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "View Device File Status",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/files/status",
 								"method": "GET",
 								"header": [
 									{
@@ -1547,27 +1116,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/files/status",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1",
-										"files",
-										"status"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Clear Configuration Update Failure Status",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/configuration/retryStatus/reset",
 								"method": "POST",
 								"header": [
 									{
@@ -1579,28 +1139,14 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/configuration/retryStatus/reset",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1",
-										"configuration",
-										"retryStatus",
-										"reset"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Clear Firmware Update Failure Status",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/firmware/retryStatus/reset",
 								"method": "POST",
 								"header": [
 									{
@@ -1612,28 +1158,14 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/firmware/retryStatus/reset",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1",
-										"firmware",
-										"retryStatus",
-										"reset"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Set Update Failure Limit",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/files",
 								"method": "PUT",
 								"header": [
 									{
@@ -1649,25 +1181,14 @@
 									"mode": "raw",
 									"raw": "{\n  \"updateFailureLimit\": 4\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/files",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"files"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "View Update Failure Limit",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/files",
 								"method": "GET",
 								"header": [
 									{
@@ -1675,25 +1196,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/files",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"files"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "View Device Tracing Events Within Time Range via UUID",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/tracing/from/2016-08-01/to/dbc28fc0-5eed-11e6-a670-77c27dd5fa5e",
 								"method": "GET",
 								"header": [
 									{
@@ -1701,35 +1215,25 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/tracing/from/2016-08-01/to/dbc28fc0-5eed-11e6-a670-77c27dd5fa5e",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1",
-										"tracing",
-										"from",
-										"2016-08-01",
-										"to",
-										"dbc28fc0-5eed-11e6-a670-77c27dd5fa5e"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						}
-					]
+					],
+					"_postman_isSubFolder": true
 				},
 				{
 					"name": "Device Tag",
+					"description": "",
 					"item": [
 						{
 							"name": "List Device Tags",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags",
 								"method": "GET",
 								"header": [
 									{
@@ -1737,24 +1241,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"tags"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "View Device Tag",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags/d3956efd-43c5-4745-810e-a522e5f03290",
 								"method": "GET",
 								"header": [
 									{
@@ -1762,25 +1260,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags/d3956efd-43c5-4745-810e-a522e5f03290",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"tags",
-										"d3956efd-43c5-4745-810e-a522e5f03290"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Create Device Tags",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags",
 								"method": "POST",
 								"header": [
 									{
@@ -1796,24 +1287,14 @@
 									"mode": "raw",
 									"raw": "{\n    \"name\": \"sometag\",\n    \"color\": \"#d5d5d5\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"tags"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Edit Device Tag",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags/6e66ef5f-36e2-440e-a587-4a7a562d0fbf",
 								"method": "PUT",
 								"header": [
 									{
@@ -1829,24 +1310,33 @@
 									"mode": "raw",
 									"raw": "{\n  \"name\": \"sometag\",\n  \"color\": \"#d5d5d5\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags/6e66ef5f-36e2-440e-a587-4a7a562d0fbf",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"tags",
-										"6e66ef5f-36e2-440e-a587-4a7a562d0fbf"
-									]
-								}
+								"description": ""
 							},
 							"response": [
 								{
+									"id": "2f461ce4-4404-4043-a14e-a5ef4ae2ac92",
 									"name": "Edit Device Tag|200 OK",
 									"originalRequest": {
+										"url": {
+											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags/:tagid",
+											"host": [
+												"{{protocol}}{{url}}{{port}}"
+											],
+											"path": [
+												"v1",
+												"tenants",
+												"{{tenantId}}",
+												"tags",
+												":tagid"
+											],
+											"query": [],
+											"variable": [
+												{
+													"key": "tagid",
+													"value": "6e66ef5f-36e2-440e-a587-4a7a562d0fbf"
+												}
+											]
+										},
 										"method": "PUT",
 										"header": [
 											{
@@ -1862,29 +1352,12 @@
 											"mode": "raw",
 											"raw": "{\n  \"name\": \"sometag\",\n  \"color\": \"#d5d5d5\"\n}"
 										},
-										"url": {
-											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags/:tagid",
-											"host": [
-												"{{protocol}}{{url}}{{port}}"
-											],
-											"path": [
-												"v1",
-												"tenants",
-												"{{tenantId}}",
-												"tags",
-												":tagid"
-											],
-											"variable": [
-												{
-													"key": "tagid",
-													"value": "6e66ef5f-36e2-440e-a587-4a7a562d0fbf"
-												}
-											]
-										}
+										"description": ""
 									},
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Server",
@@ -1919,6 +1392,7 @@
 						{
 							"name": "Assign Device Tags",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags/6e66ef5f-36e2-440e-a587-4a7a562d0fbf/devices",
 								"method": "POST",
 								"header": [
 									{
@@ -1934,25 +1408,34 @@
 									"mode": "raw",
 									"raw": "{\n\t\"deviceIds\": [\"123456\", \"435354\", \"34343545\"]\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags/6e66ef5f-36e2-440e-a587-4a7a562d0fbf/devices",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"tags",
-										"6e66ef5f-36e2-440e-a587-4a7a562d0fbf",
-										"devices"
-									]
-								}
+								"description": ""
 							},
 							"response": [
 								{
+									"id": "7b518190-fe9a-4b4a-a3fe-c9543be2b724",
 									"name": "Assign Device Tags| 404 Not found",
 									"originalRequest": {
+										"url": {
+											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags/:tagId/devices",
+											"host": [
+												"{{protocol}}{{url}}{{port}}"
+											],
+											"path": [
+												"v1",
+												"tenants",
+												"{{tenantId}}",
+												"tags",
+												":tagId",
+												"devices"
+											],
+											"query": [],
+											"variable": [
+												{
+													"key": "tagId",
+													"value": "6e66ef5f-36e2-440e-a587-4a7a562d0fbf"
+												}
+											]
+										},
 										"method": "POST",
 										"header": [
 											{
@@ -1968,30 +1451,12 @@
 											"mode": "raw",
 											"raw": "{\n\t\"deviceIds\": [\"1\", \"2\", \"3\"]\n}"
 										},
-										"url": {
-											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags/:tagId/devices",
-											"host": [
-												"{{protocol}}{{url}}{{port}}"
-											],
-											"path": [
-												"v1",
-												"tenants",
-												"{{tenantId}}",
-												"tags",
-												":tagId",
-												"devices"
-											],
-											"variable": [
-												{
-													"key": "tagId",
-													"value": "6e66ef5f-36e2-440e-a587-4a7a562d0fbf"
-												}
-											]
-										}
+										"description": ""
 									},
 									"status": "Not Found",
 									"code": 404,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Server",
@@ -2022,8 +1487,30 @@
 									"body": "{\n    \"code\": \"notFound\",\n    \"errors\": [\n        {\n            \"code\": \"notFound\",\n            \"detail\": \"Device(s) not found: 1, 2, 3\",\n            \"resource\": \"device\"\n        }\n    ],\n    \"message\": \"Not found\"\n}"
 								},
 								{
+									"id": "fad5fb52-9e5c-4369-80b7-e34a7c1c4d22",
 									"name": "Assign Device Tags| 200 OK",
 									"originalRequest": {
+										"url": {
+											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags/:tagId/devices",
+											"host": [
+												"{{protocol}}{{url}}{{port}}"
+											],
+											"path": [
+												"v1",
+												"tenants",
+												"{{tenantId}}",
+												"tags",
+												":tagId",
+												"devices"
+											],
+											"query": [],
+											"variable": [
+												{
+													"key": "tagId",
+													"value": "6e66ef5f-36e2-440e-a587-4a7a562d0fbf"
+												}
+											]
+										},
 										"method": "POST",
 										"header": [
 											{
@@ -2039,30 +1526,12 @@
 											"mode": "raw",
 											"raw": "{\n\t\"deviceIds\": [\"123456\", \"435354\", \"34343545\"]\n}"
 										},
-										"url": {
-											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags/:tagId/devices",
-											"host": [
-												"{{protocol}}{{url}}{{port}}"
-											],
-											"path": [
-												"v1",
-												"tenants",
-												"{{tenantId}}",
-												"tags",
-												":tagId",
-												"devices"
-											],
-											"variable": [
-												{
-													"key": "tagId",
-													"value": "6e66ef5f-36e2-440e-a587-4a7a562d0fbf"
-												}
-											]
-										}
+										"description": ""
 									},
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Server",
@@ -2097,6 +1566,7 @@
 						{
 							"name": "Delete Device Tag",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags/6e66ef5f-36e2-440e-a587-4a7a562d0fbf",
 								"method": "DELETE",
 								"header": [
 									{
@@ -2112,25 +1582,14 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags/6e66ef5f-36e2-440e-a587-4a7a562d0fbf",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"tags",
-										"6e66ef5f-36e2-440e-a587-4a7a562d0fbf"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Unassign Device Tags",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags/6e66ef5f-36e2-440e-a587-4a7a562d0fbf/devices",
 								"method": "DELETE",
 								"header": [
 									{
@@ -2146,25 +1605,34 @@
 									"mode": "raw",
 									"raw": "{\n\t\"deviceIds\": [\"1\", \"2\", \"3\"]\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags/6e66ef5f-36e2-440e-a587-4a7a562d0fbf/devices",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"tags",
-										"6e66ef5f-36e2-440e-a587-4a7a562d0fbf",
-										"devices"
-									]
-								}
+								"description": ""
 							},
 							"response": [
 								{
+									"id": "e19a90f2-ce1b-47f6-99a5-b3579dd31141",
 									"name": "Unassign Device Tags|200 Ok",
 									"originalRequest": {
+										"url": {
+											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags/:tagid/devices",
+											"host": [
+												"{{protocol}}{{url}}{{port}}"
+											],
+											"path": [
+												"v1",
+												"tenants",
+												"{{tenantId}}",
+												"tags",
+												":tagid",
+												"devices"
+											],
+											"query": [],
+											"variable": [
+												{
+													"key": "tagid",
+													"value": "6e66ef5f-36e2-440e-a587-4a7a562d0fbf"
+												}
+											]
+										},
 										"method": "DELETE",
 										"header": [
 											{
@@ -2180,30 +1648,12 @@
 											"mode": "raw",
 											"raw": "{\n\t\"deviceIds\": [\"1\", \"2\", \"3\"]\n}"
 										},
-										"url": {
-											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/tags/:tagid/devices",
-											"host": [
-												"{{protocol}}{{url}}{{port}}"
-											],
-											"path": [
-												"v1",
-												"tenants",
-												"{{tenantId}}",
-												"tags",
-												":tagid",
-												"devices"
-											],
-											"variable": [
-												{
-													"key": "tagid",
-													"value": "6e66ef5f-36e2-440e-a587-4a7a562d0fbf"
-												}
-											]
-										}
+										"description": ""
 									},
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Server",
@@ -2235,14 +1685,17 @@
 								}
 							]
 						}
-					]
+					],
+					"_postman_isSubFolder": true
 				},
 				{
 					"name": "Folder Ops - Configuration",
+					"description": "",
 					"item": [
 						{
 							"name": "List Folders",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/configurationFolders",
 								"method": "GET",
 								"header": [
 									{
@@ -2250,23 +1703,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/configurationFolders",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"configurationFolders"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": [
 								{
+									"id": "e5ba6b7f-d724-45c0-bdd9-5416d0e45d7e",
 									"name": "List Folders| With 200 OK",
 									"originalRequest": {
+										"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/configurationFolders",
 										"method": "GET",
 										"header": [
 											{
@@ -2274,22 +1722,16 @@
 												"value": "Bearer {{token}}"
 											}
 										],
-										"url": {
-											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/configurationFolders",
-											"host": [
-												"{{protocol}}{{url}}{{port}}"
-											],
-											"path": [
-												"v1",
-												"tenants",
-												"{{tenantId}}",
-												"configurationFolders"
-											]
-										}
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"description": ""
 									},
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Server",
@@ -2324,13 +1766,6 @@
 						{
 							"name": "View Folder",
 							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}"
-									}
-								],
 								"url": {
 									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/configurationFolders/:FolderName",
 									"host": [
@@ -2343,19 +1778,14 @@
 										"configurationFolders",
 										":FolderName"
 									],
+									"query": [],
 									"variable": [
 										{
 											"key": "FolderName",
 											"value": ""
 										}
 									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "List Files",
-							"request": {
+								},
 								"method": "GET",
 								"header": [
 									{
@@ -2363,6 +1793,17 @@
 										"value": "Bearer {{token}}"
 									}
 								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "List Files",
+							"request": {
 								"url": {
 									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/configurationFolders/:FolderName/files",
 									"host": [
@@ -2376,19 +1817,14 @@
 										":FolderName",
 										"files"
 									],
+									"query": [],
 									"variable": [
 										{
 											"key": "FolderName",
 											"value": "cfgFolder"
 										}
 									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "View File",
-							"request": {
+								},
 								"method": "GET",
 								"header": [
 									{
@@ -2396,6 +1832,17 @@
 										"value": "Bearer {{token}}"
 									}
 								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "View File",
+							"request": {
 								"url": {
 									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/configurationFolders/:FolderName/files/:FileName",
 									"host": [
@@ -2410,6 +1857,7 @@
 										"files",
 										":FileName"
 									],
+									"query": [],
 									"variable": [
 										{
 											"key": "FolderName",
@@ -2420,13 +1868,46 @@
 											"value": "cfgFile"
 										}
 									]
-								}
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Bulk Assign Folder",
 							"request": {
+								"url": {
+									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/configurationFolders/:FodlerName/devices",
+									"host": [
+										"{{protocol}}{{url}}{{port}}"
+									],
+									"path": [
+										"v1",
+										"tenants",
+										"{{tenantId}}",
+										"configurationFolders",
+										":FodlerName",
+										"devices"
+									],
+									"query": [],
+									"variable": [
+										{
+											"key": "FodlerName",
+											"value": "cfgFolder"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{
@@ -2442,32 +1923,14 @@
 									"mode": "raw",
 									"raw": "{ \n\t\"deviceIds\": [\"1\",\"2\",\"3\"]\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/configurationFolders/:FodlerName/devices",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"configurationFolders",
-										":FodlerName",
-										"devices"
-									],
-									"variable": [
-										{
-											"key": "FodlerName",
-											"value": "cfgFolder"
-										}
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Update Folder",
 							"request": {
+								"url": "{{protocol}}://{{url}}:{{port}}/v1/tenants/{{tenantId}}/configurationFolders/cfgFolder",
 								"method": "PUT",
 								"header": [
 									{
@@ -2483,27 +1946,14 @@
 									"mode": "raw",
 									"raw": "{ \"activeFileName\": \"cfgFile\" }"
 								},
-								"url": {
-									"raw": "{{protocol}}://{{url}}:{{port}}/v1/tenants/{{tenantId}}/configurationFolders/cfgFolder",
-									"protocol": "{{protocol}}",
-									"host": [
-										"{{url}}"
-									],
-									"port": "{{port}}",
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"configurationFolders",
-										"cfgFolder"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Create Folder",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/configurationFolders",
 								"method": "POST",
 								"header": [
 									{
@@ -2519,24 +1969,14 @@
 									"mode": "raw",
 									"raw": "{ \"name\": \"cfgFolder\" }"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/configurationFolders",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"configurationFolders"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Delete File",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/configurationFolders/cfgFolder/files/cfgFile",
 								"method": "DELETE",
 								"header": [
 									{
@@ -2548,27 +1988,14 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/configurationFolders/cfgFolder/files/cfgFile",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"configurationFolders",
-										"cfgFolder",
-										"files",
-										"cfgFile"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "File Upload Request",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/configurationFolders/cfgFolder/files",
 								"method": "POST",
 								"header": [
 									{
@@ -2586,39 +2013,13 @@
 										}
 									]
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/configurationFolders/cfgFolder/files",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"configurationFolders",
-										"cfgFolder",
-										"files"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "File Upload",
 							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}"
-									}
-								],
-								"body": {
-									"mode": "file",
-									"file": {
-										"src": ""
-									}
-								},
 								"url": {
 									"raw": "https://storage.googleapis.com/bitbrew-fota/production/bitbrew/cfg-cfgFolder/cfgFile?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=large-fota%40bb-hub-0.iam.gserviceaccount.com%2F20191212%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20191212T171410Z&X-Goog-Expires=1800&X-Goog-SignedHeaders=host&X-Goog-Signature=2df2e5bfbdf50ebcd5a3e07197b768dadc901be32e5ab3a6fa78ff4ac23f831a3ffb01c01d0325817bac5f2d561d6b6c5f59af3db5301712b18940818a1a18b5d57d5f16d81b9d969a48f7ba4e2085f2d6d0bf89735ed69d2a9f27d9506c608f0055f00aeb222f2cebdf271cdc45f860597553c387bc8c82520e2a66fc581d2eff30c5384f8186839024f4fa4b9e904be3d02a5e1277c17589efde1b13f4755ca0543d2011895b0110841d4ef4f46a90e7b215b3fde0ce217e6772739c3ec0b5b71d927a4acf178753a3e8cd7624033a8e18618120ff5c39bf97752f85fd9834c503c1ed167d6d7f863685aaf55522fb2a8f61626c9cc653aadda76f8eb08009",
 									"protocol": "https",
@@ -2659,14 +2060,49 @@
 											"key": "X-Goog-Signature",
 											"value": "2df2e5bfbdf50ebcd5a3e07197b768dadc901be32e5ab3a6fa78ff4ac23f831a3ffb01c01d0325817bac5f2d561d6b6c5f59af3db5301712b18940818a1a18b5d57d5f16d81b9d969a48f7ba4e2085f2d6d0bf89735ed69d2a9f27d9506c608f0055f00aeb222f2cebdf271cdc45f860597553c387bc8c82520e2a66fc581d2eff30c5384f8186839024f4fa4b9e904be3d02a5e1277c17589efde1b13f4755ca0543d2011895b0110841d4ef4f46a90e7b215b3fde0ce217e6772739c3ec0b5b71d927a4acf178753a3e8cd7624033a8e18618120ff5c39bf97752f85fd9834c503c1ed167d6d7f863685aaf55522fb2a8f61626c9cc653aadda76f8eb08009"
 										}
-									]
-								}
+									],
+									"variable": []
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "file",
+									"file": {
+										"src": ""
+									}
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Delete Folder",
 							"request": {
+								"url": {
+									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/configurationFolders/:FolderName",
+									"host": [
+										"{{protocol}}{{url}}{{port}}"
+									],
+									"path": [
+										"v1",
+										"tenants",
+										"{{tenantId}}",
+										"configurationFolders",
+										":FolderName"
+									],
+									"query": [],
+									"variable": [
+										{
+											"key": "FolderName",
+											"value": "cfgFolder"
+										}
+									]
+								},
 								"method": "DELETE",
 								"header": [
 									{
@@ -2682,25 +2118,6 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/configurationFolders/:FolderName",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"configurationFolders",
-										":FolderName"
-									],
-									"variable": [
-										{
-											"key": "FolderName",
-											"value": "cfgFolder"
-										}
-									]
-								},
 								"description": "1. It is backend API.\n2. It is used to remove a configuration folder from your system. Any files inside the folder will also be deleted when you delete a folder. Deleting a folder that is assigned to devices is prohibited.\n3. Pass the valid tennat id in the environment varaible.\n4. Pass the Config folder name which need to delete in th path varaible value"
 							},
 							"response": []
@@ -2708,6 +2125,7 @@
 						{
 							"name": "UnasignConfigurationFolder",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/brokers/DanlawTcp",
 								"method": "PUT",
 								"header": [
 									{
@@ -2723,34 +2141,16 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "\n{\n    \"configurationFolderName\":\"cfgFolder\",\n    \"imei\":\"1\",\n    \"type\":\"DanlawTcp\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
+									"raw": "\n{\n    \"configurationFolderName\":\"cfgFolder\",\n    \"imei\":\"1\",\n    \"type\":\"DanlawTcp\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/1/brokers/DanlawTcp",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"1",
-										"brokers",
-										"DanlawTcp"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "View Device Configuration Folder",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/firmwareFolders/fwFolder",
 								"method": "GET",
 								"header": [
 									{
@@ -2758,26 +2158,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/firmwareFolders/fwFolder",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"firmwareFolders",
-										"fwFolder"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "List Device Configuration Folders",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/configurationFolders",
 								"method": "GET",
 								"header": [
 									{
@@ -2785,30 +2177,25 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/configurationFolders",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"configurationFolders"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						}
-					]
+					],
+					"_postman_isSubFolder": true
 				},
 				{
 					"name": "Folder Ops - Firmware",
+					"description": "The platform allows users to control firmware updates through a folder system.\nThere are two types of folders–firmware and configuration–which hold files of the matching type. Folders (not files) are assigned to individual devices, one of each kind of folder maximum.\n\nEach folder can have one and only one of its contained files marked as 'active.' Every time the device connects to the server, the system compares the name of the firmware file that the device reports to the name of the active files in the device's assigned folder. If there is a mismatch, the device will be told to update to the active file.\n\nWith this system, many devices can be updated with a single change in the selection of the active file.\n\nUse these methods to upload and manage firmware files and folders.",
 					"item": [
 						{
 							"name": "List Folders",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders",
 								"method": "GET",
 								"header": [
 									{
@@ -2816,24 +2203,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"firmwareFolders"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "View Folder",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/fwFolder",
 								"method": "GET",
 								"header": [
 									{
@@ -2841,25 +2222,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/fwFolder",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"firmwareFolders",
-										"fwFolder"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "List Files",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/fwFolder/files",
 								"method": "GET",
 								"header": [
 									{
@@ -2867,26 +2241,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/fwFolder/files",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"firmwareFolders",
-										"fwFolder",
-										"files"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Bulk Assign Folder",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/fwFolder/devices",
 								"method": "POST",
 								"header": [
 									{
@@ -2902,26 +2268,14 @@
 									"mode": "raw",
 									"raw": "{ \n\t\"deviceIds\": [\"1\",\"2\",\"3\"]\n}\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/fwFolder/devices",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"firmwareFolders",
-										"fwFolder",
-										"devices"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "File Upload Request",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/fwFolder/files",
 								"method": "POST",
 								"header": [
 									{
@@ -2939,26 +2293,14 @@
 										}
 									]
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/fwFolder/files",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"firmwareFolders",
-										"fwFolder",
-										"files"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Update Folder",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/fwFolder",
 								"method": "PUT",
 								"header": [
 									{
@@ -2974,24 +2316,33 @@
 									"mode": "raw",
 									"raw": "{ \"activeFileName\": \"fwFile\" }"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/fwFolder",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"firmwareFolders",
-										"fwFolder"
-									]
-								}
+								"description": ""
 							},
 							"response": [
 								{
+									"id": "cd4ef0dd-3ec2-47e5-9464-d6bad761d96d",
 									"name": "Update Folder|200 OK",
 									"originalRequest": {
+										"url": {
+											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/:Foldername",
+											"host": [
+												"{{protocol}}{{url}}{{port}}"
+											],
+											"path": [
+												"v1",
+												"tenants",
+												"{{tenantId}}",
+												"firmwareFolders",
+												":Foldername"
+											],
+											"query": [],
+											"variable": [
+												{
+													"key": "Foldername",
+													"value": "fwFolder"
+												}
+											]
+										},
 										"method": "PUT",
 										"header": [
 											{
@@ -3007,29 +2358,12 @@
 											"mode": "raw",
 											"raw": "{ \"activeFileName\": \"fwFile\" }"
 										},
-										"url": {
-											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/:Foldername",
-											"host": [
-												"{{protocol}}{{url}}{{port}}"
-											],
-											"path": [
-												"v1",
-												"tenants",
-												"{{tenantId}}",
-												"firmwareFolders",
-												":Foldername"
-											],
-											"variable": [
-												{
-													"key": "Foldername",
-													"value": "fwFolder"
-												}
-											]
-										}
+										"description": ""
 									},
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Server",
@@ -3064,6 +2398,7 @@
 						{
 							"name": "Delete Folder",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/fwFolder",
 								"method": "DELETE",
 								"header": [
 									{
@@ -3079,24 +2414,33 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/fwFolder",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"firmwareFolders",
-										"fwFolder"
-									]
-								}
+								"description": ""
 							},
 							"response": [
 								{
+									"id": "fe2fb20e-eeee-4997-b1f4-187ac37e00a7",
 									"name": "Delete Folder|With 200 OK",
 									"originalRequest": {
+										"url": {
+											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/:FolderName",
+											"host": [
+												"{{protocol}}{{url}}{{port}}"
+											],
+											"path": [
+												"v1",
+												"tenants",
+												"{{tenantId}}",
+												"firmwareFolders",
+												":FolderName"
+											],
+											"query": [],
+											"variable": [
+												{
+													"key": "FolderName",
+													"value": "fwFolder"
+												}
+											]
+										},
 										"method": "DELETE",
 										"header": [
 											{
@@ -3112,29 +2456,12 @@
 											"mode": "raw",
 											"raw": ""
 										},
-										"url": {
-											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/:FolderName",
-											"host": [
-												"{{protocol}}{{url}}{{port}}"
-											],
-											"path": [
-												"v1",
-												"tenants",
-												"{{tenantId}}",
-												"firmwareFolders",
-												":FolderName"
-											],
-											"variable": [
-												{
-													"key": "FolderName",
-													"value": "fwFolder"
-												}
-											]
-										}
+										"description": ""
 									},
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Server",
@@ -3169,6 +2496,7 @@
 						{
 							"name": "View File",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/fwFolder/files/fwdFile",
 								"method": "GET",
 								"header": [
 									{
@@ -3176,33 +2504,17 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/fwFolder/files/fwdFile",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"firmwareFolders",
-										"fwFolder",
-										"files",
-										"fwdFile"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": [
 								{
+									"id": "fe7b26b4-a0cb-41ba-bc63-76ba700b9f3b",
 									"name": "View File|with 200 OK",
 									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer {{token}}"
-											}
-										],
 										"url": {
 											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/:FolderName/files/:FileName",
 											"host": [
@@ -3217,6 +2529,7 @@
 												"files",
 												":FileName"
 											],
+											"query": [],
 											"variable": [
 												{
 													"key": "FolderName",
@@ -3227,11 +2540,24 @@
 													"value": "fwFile"
 												}
 											]
-										}
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"description": ""
 									},
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Server",
@@ -3266,6 +2592,7 @@
 						{
 							"name": "Create Folder",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders",
 								"method": "POST",
 								"header": [
 									{
@@ -3281,37 +2608,13 @@
 									"mode": "raw",
 									"raw": "{ \"name\": \"abc\" }"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"firmwareFolders"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "File Upload",
 							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}"
-									}
-								],
-								"body": {
-									"mode": "file",
-									"file": {
-										"src": ""
-									}
-								},
 								"url": {
 									"raw": "https://storage.googleapis.com/bitbrew-fota/default/bitbrew-demo/fw-fwFolder/abc?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=large-fota%40bb-hub-01.iam.gserviceaccount.com%2F20201207%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20201207T104253Z&X-Goog-Expires=1800&X-Goog-SignedHeaders=host&X-Goog-Signature=25122eee12bafce31d52fdd584a106816e990343f06c792703cdc22a6ae8fca63166d4b774a8656f0981858fdf291082ea03f1deee762debe8b98ab15353f1d878beef0d2a288c82f68321aa16f4692729489891a9684c5b16be832b0c6d2db78c488f647a92f983dc50b6cefd3705b55654be684a01ac4cad80d5b892ccf18eb81d0823c0e1effafd7bd71a4e05d9958049c6e287053148a01565bc03f25786bbd54a74d5e2ca6fab5f6138e8b0cc5fc494cb58c5deab3e24f74826bcc8edcf5e93ddef2b469f34a350c55f819a8d894a61483d3aa83360e8ca3f5e6567a3c91b980c6bb267f0cced99a1222a18647a959369f8cc3f337b4a3ba27db19b0b40",
 									"protocol": "https",
@@ -3352,14 +2655,30 @@
 											"key": "X-Goog-Signature",
 											"value": "25122eee12bafce31d52fdd584a106816e990343f06c792703cdc22a6ae8fca63166d4b774a8656f0981858fdf291082ea03f1deee762debe8b98ab15353f1d878beef0d2a288c82f68321aa16f4692729489891a9684c5b16be832b0c6d2db78c488f647a92f983dc50b6cefd3705b55654be684a01ac4cad80d5b892ccf18eb81d0823c0e1effafd7bd71a4e05d9958049c6e287053148a01565bc03f25786bbd54a74d5e2ca6fab5f6138e8b0cc5fc494cb58c5deab3e24f74826bcc8edcf5e93ddef2b469f34a350c55f819a8d894a61483d3aa83360e8ca3f5e6567a3c91b980c6bb267f0cced99a1222a18647a959369f8cc3f337b4a3ba27db19b0b40"
 										}
-									]
-								}
+									],
+									"variable": []
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "file",
+									"file": {
+										"src": ""
+									}
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Delete File",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/fwFolder/files/fwFile",
 								"method": "DELETE",
 								"header": [
 									{
@@ -3371,27 +2690,14 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/firmwareFolders/fwFolder/files/fwFile",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"firmwareFolders",
-										"fwFolder",
-										"files",
-										"fwFile"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "View Device Firmware Folder",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/firmwareFolders/fwFolder",
 								"method": "GET",
 								"header": [
 									{
@@ -3399,26 +2705,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/firmwareFolders/fwFolder",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										"firmwareFolders",
-										"fwFolder"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "List Device Firmware Folders",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/firmwareFolders",
 								"method": "GET",
 								"header": [
 									{
@@ -3426,8 +2724,19 @@
 										"value": "Bearer {{token}}"
 									}
 								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "UnasignFirmwareFolder",
+							"request": {
 								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/firmwareFolders",
+									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/:DeviceID/brokers/DanlawTcp",
 									"host": [
 										"{{protocol}}{{url}}{{port}}"
 									],
@@ -3436,15 +2745,18 @@
 										"tenants",
 										"{{tenantId}}",
 										"devices",
-										"firmwareFolders"
+										":DeviceID",
+										"brokers",
+										"DanlawTcp"
+									],
+									"query": [],
+									"variable": [
+										{
+											"key": "DeviceID",
+											"value": "1"
+										}
 									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "UnasignFirmwareFolder",
-							"request": {
+								},
 								"method": "PUT",
 								"header": [
 									{
@@ -3460,73 +2772,22 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "\n{\n    \"firmwareFolderName\":\"fwFolder\",\n    \"imei\":\"1\",\n    \"type\":\"DanlawTcp\"\n    }",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
+									"raw": "\n{\n    \"firmwareFolderName\":\"fwFolder\",\n    \"imei\":\"1\",\n    \"type\":\"DanlawTcp\"\n    }"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/devices/:DeviceID/brokers/DanlawTcp",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"devices",
-										":DeviceID",
-										"brokers",
-										"DanlawTcp"
-									],
-									"variable": [
-										{
-											"key": "DeviceID",
-											"value": "1"
-										}
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						}
 					],
-					"description": "The platform allows users to control firmware updates through a folder system.\nThere are two types of folders–firmware and configuration–which hold files of the matching type. Folders (not files) are assigned to individual devices, one of each kind of folder maximum.\n\nEach folder can have one and only one of its contained files marked as 'active.' Every time the device connects to the server, the system compares the name of the firmware file that the device reports to the name of the active files in the device's assigned folder. If there is a mismatch, the device will be told to update to the active file.\n\nWith this system, many devices can be updated with a single change in the selection of the active file.\n\nUse these methods to upload and manage firmware files and folders.",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						}
-					]
+					"_postman_isSubFolder": true
 				},
 				{
 					"name": "Metrics Ops",
+					"description": "",
 					"item": [
 						{
 							"name": "Actions - device",
 							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}"
-									}
-								],
 								"url": {
 									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/metrics/actions?from=-1day&interval=1hour&until=-20hours&deviceId=1",
 									"host": [
@@ -3556,14 +2817,9 @@
 											"key": "deviceId",
 											"value": "1"
 										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Actions",
-							"request": {
+									],
+									"variable": []
+								},
 								"method": "GET",
 								"header": [
 									{
@@ -3571,6 +2827,17 @@
 										"value": "Bearer {{token}}"
 									}
 								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Actions",
+							"request": {
 								"url": {
 									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/metrics/actions?from=-1day&interval=1hour&until=-20hours",
 									"host": [
@@ -3596,14 +2863,9 @@
 											"key": "until",
 											"value": "-20hours"
 										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Events",
-							"request": {
+									],
+									"variable": []
+								},
 								"method": "GET",
 								"header": [
 									{
@@ -3611,6 +2873,17 @@
 										"value": "Bearer {{token}}"
 									}
 								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Events",
+							"request": {
 								"url": {
 									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/metrics/events?from=-7day&interval=1day",
 									"host": [
@@ -3632,14 +2905,9 @@
 											"key": "interval",
 											"value": "1day"
 										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Events - device",
-							"request": {
+									],
+									"variable": []
+								},
 								"method": "GET",
 								"header": [
 									{
@@ -3647,6 +2915,17 @@
 										"value": "Bearer {{token}}"
 									}
 								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Events - device",
+							"request": {
 								"url": {
 									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/metrics/events?from=-14day&interval=1day&deviceId={{deviceId}}",
 									"host": [
@@ -3672,19 +2951,35 @@
 											"key": "deviceId",
 											"value": "{{deviceId}}"
 										}
-									]
-								}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						}
-					]
+					],
+					"_postman_isSubFolder": true
 				},
 				{
 					"name": "Tenant Ops",
+					"description": "",
 					"item": [
 						{
 							"name": "Get Tenant List",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants",
 								"method": "GET",
 								"header": [
 									{
@@ -3696,21 +2991,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": [
 								{
+									"id": "ef6574ea-685c-400b-af75-24cb639602c0",
 									"name": "Get Tenant List| With 200 OK",
 									"originalRequest": {
+										"url": "{{protocol}}{{url}}{{port}}/v1/tenants",
 										"method": "GET",
 										"header": [
 											{
@@ -3722,20 +3014,16 @@
 												"value": "Bearer {{token}}"
 											}
 										],
-										"url": {
-											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants",
-											"host": [
-												"{{protocol}}{{url}}{{port}}"
-											],
-											"path": [
-												"v1",
-												"tenants"
-											]
-										}
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"description": ""
 									},
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Server",
@@ -3770,6 +3058,7 @@
 						{
 							"name": "Get Tenant Info",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}",
 								"method": "GET",
 								"header": [
 									{
@@ -3777,23 +3066,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Create Tenant",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants",
 								"method": "POST",
 								"header": [
 									{
@@ -3809,22 +3093,14 @@
 									"mode": "raw",
 									"raw": "{\n    \"name\": \"tenantId\",\n    \"properName\": \"Tenant Name\",\n    \"enabled\": true\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Update Tenant Details",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}",
 								"method": "POST",
 								"header": [
 									{
@@ -3840,23 +3116,14 @@
 									"mode": "raw",
 									"raw": "{\n    \"properName\": \"Peak Telematix\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Remove  Tenant",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}",
 								"method": "DELETE",
 								"header": [
 									{
@@ -3872,23 +3139,14 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Disable Tenant",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/disable",
 								"method": "POST",
 								"header": [
 									{
@@ -3900,24 +3158,14 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/disable",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"disable"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Enable Tenant",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/enable",
 								"method": "POST",
 								"header": [
 									{
@@ -3929,24 +3177,14 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/enable",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"enable"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Get Activity Log",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/activitylog/from/2017-08-01/to/2017-08-01",
 								"method": "GET",
 								"header": [
 									{
@@ -3958,28 +3196,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/activitylog/from/2017-08-01/to/2017-08-01",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"activitylog",
-										"from",
-										"2017-08-01",
-										"to",
-										"2017-08-01"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Get Activity Log, via uuid",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/activitylog/from/f4508200-3df9-11eb-8080-808080808080/to/35ac8b8f-3ec2-11eb-7f7f-7f7f7f7f7f7f",
 								"method": "GET",
 								"header": [
 									{
@@ -3991,39 +3219,17 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/activitylog/from/f4508200-3df9-11eb-8080-808080808080/to/35ac8b8f-3ec2-11eb-7f7f-7f7f7f7f7f7f",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"activitylog",
-										"from",
-										"f4508200-3df9-11eb-8080-808080808080",
-										"to",
-										"35ac8b8f-3ec2-11eb-7f7f-7f7f7f7f7f7f"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Get Activity Log (Admin)",
 							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}"
-									}
-								],
 								"url": {
 									"raw": "{{protocol}}{{url}}{{port}}/v1/admin/activitylog?from=2020-03-21&to=2020-05-21&tenantId=-1",
 									"host": [
@@ -4047,15 +3253,34 @@
 											"key": "tenantId",
 											"value": "-1"
 										}
-									]
-								}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						}
-					]
+					],
+					"_postman_isSubFolder": true
 				},
 				{
 					"name": "User Auth",
+					"description": "",
 					"item": [
 						{
 							"name": "Get Access Token (app)",
@@ -4063,16 +3288,17 @@
 								{
 									"listen": "test",
 									"script": {
+										"type": "text/javascript",
 										"exec": [
 											"var jsonData = JSON.parse(responseBody);",
 											"postman.setEnvironmentVariable(\"token\", jsonData.accessToken);",
 											"tests[\"Token Set\"] = jsonData.accessToken === postman.getEnvironmentVariable(\"token\");"
-										],
-										"type": "text/javascript"
+										]
 									}
 								}
 							],
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/token",
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -4100,16 +3326,7 @@
 										}
 									]
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/token",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"token"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
@@ -4119,16 +3336,17 @@
 								{
 									"listen": "test",
 									"script": {
+										"type": "text/javascript",
 										"exec": [
 											"var jsonData = JSON.parse(responseBody);",
 											"postman.setEnvironmentVariable(\"token\", jsonData.accessToken);",
 											"tests[\"Token Set\"] = jsonData.accessToken === postman.getEnvironmentVariable(\"token\");"
-										],
-										"type": "text/javascript"
+										]
 									}
 								}
 							],
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/token",
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -4156,22 +3374,14 @@
 										}
 									]
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/token",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"token"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "List Users (Admin)",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/admin/users",
 								"method": "GET",
 								"header": [
 									{
@@ -4187,23 +3397,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/admin/users",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"admin",
-										"users"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "List Users (Tenant)",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/users",
 								"method": "GET",
 								"header": [
 									{
@@ -4219,39 +3424,17 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/users",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"users"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Get User by Email",
 							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "grant_type",
-										"value": "pipo"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}"
-									}
-								],
 								"url": {
 									"raw": "{{protocol}}{{url}}{{port}}/v1/admin/users?email=admin",
 									"host": [
@@ -4267,14 +3450,36 @@
 											"key": "email",
 											"value": "admin"
 										}
-									]
-								}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "grant_type",
+										"value": "pipo"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Add User",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/admin/users",
 								"method": "POST",
 								"header": [
 									{
@@ -4290,23 +3495,14 @@
 									"mode": "raw",
 									"raw": "{\n    \"email\": \"aladdin@streetrat.com\",\n    \"password\": \"mypassword\",\n    \"role\": \"tenantAdmin\",\n    \"tenantId\": \"bit69-brew\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/admin/users",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"admin",
-										"users"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Update User Roles",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/admin/users/{{userId}}/role",
 								"method": "PUT",
 								"header": [
 									{
@@ -4322,25 +3518,14 @@
 									"mode": "raw",
 									"raw": "readOnlyMember"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/admin/users/{{userId}}/role",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"admin",
-										"users",
-										"{{userId}}",
-										"role"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Delete User",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/admin/users/d8d5130c-5e00-42b7-8340-945db0e9cc63",
 								"method": "DELETE",
 								"header": [
 									{
@@ -4352,34 +3537,13 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/admin/users/d8d5130c-5e00-42b7-8340-945db0e9cc63",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"admin",
-										"users",
-										"d8d5130c-5e00-42b7-8340-945db0e9cc63"
-									]
-								}
+								"description": ""
 							},
 							"response": [
 								{
+									"id": "09640557-8931-403b-8e85-16d1ee08ec33",
 									"name": "Delete User| With 200 OK",
 									"originalRequest": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer {{token}}"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": ""
-										},
 										"url": {
 											"raw": "{{protocol}}{{url}}{{port}}/v1/admin/users/:userid",
 											"host": [
@@ -4391,17 +3555,31 @@
 												"users",
 												":userid"
 											],
+											"query": [],
 											"variable": [
 												{
 													"key": "userid",
 													"value": "bb3621cf-35d6-4228-9ab5-24a5cd682313"
 												}
 											]
-										}
+										},
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"description": ""
 									},
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Server",
@@ -4436,6 +3614,7 @@
 						{
 							"name": "List Invitations",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/invitations",
 								"method": "GET",
 								"header": [
 									{
@@ -4447,24 +3626,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/invitations",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"invitations"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Invite User",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/invitations",
 								"method": "POST",
 								"header": [
 									{
@@ -4480,24 +3653,14 @@
 									"mode": "raw",
 									"raw": "{\n    \"name\": \"Ariel\",\n    \"email\": \"lilmermaid@underthesea.com\",\n    \"role\": \"tenantAdmin\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/invitations",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"invitations"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Verify Invitation",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/invitations/ZjI5ZTgyZGYtY2RmZi00ZDg0LTg5ZTgtYWZjMGMzNGRhODEw",
 								"method": "PUT",
 								"header": [
 									{
@@ -4513,23 +3676,14 @@
 									"mode": "raw",
 									"raw": "{\n    \"email\":\"lilmermaid@underthesea.com\",\n    \"password\": \"lifeisthebubbles\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/invitations/ZjI5ZTgyZGYtY2RmZi00ZDg0LTg5ZTgtYWZjMGMzNGRhODEw",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"invitations",
-										"ZjI5ZTgyZGYtY2RmZi00ZDg0LTg5ZTgtYWZjMGMzNGRhODEw"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Remove Invitation",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/invitations/6b03597d-3ddf-4d73-8dbd-a6d9b6d5c6e8",
 								"method": "DELETE",
 								"header": [
 									{
@@ -4545,25 +3699,14 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/invitations/6b03597d-3ddf-4d73-8dbd-a6d9b6d5c6e8",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"invitations",
-										"6b03597d-3ddf-4d73-8dbd-a6d9b6d5c6e8"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "List Clients (Admin)",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/admin/clients",
 								"method": "GET",
 								"header": [
 									{
@@ -4571,23 +3714,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/admin/clients",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"admin",
-										"clients"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Create Client (Admin)",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/admin/clients",
 								"method": "POST",
 								"header": [
 									{
@@ -4603,23 +3741,14 @@
 									"mode": "raw",
 									"raw": "{\n    \"name\": \"myClientName\",\n    \"description\": \"optionalDescription\",\n    \"grants\": [\"app\"]\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/admin/clients",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"admin",
-										"clients"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Create App Client (Admin)",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/admin/clients",
 								"method": "POST",
 								"header": [
 									{
@@ -4635,23 +3764,14 @@
 									"mode": "raw",
 									"raw": "{\n    \"name\": \"myClientApp\",\n    \"description\": \"optionalDescription\",\n    \"grants\": [\"client_credentials\"],\n    \"scope\": \"app\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/admin/clients",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"admin",
-										"clients"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Remove Client (Admin)",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/admin/clients/d5280c3b-7a29-44f2-940e-0f8d01f41089",
 								"method": "DELETE",
 								"header": [
 									{
@@ -4663,24 +3783,14 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/admin/clients/d5280c3b-7a29-44f2-940e-0f8d01f41089",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"admin",
-										"clients",
-										"d5280c3b-7a29-44f2-940e-0f8d01f41089"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "List Clients (Tenant)",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/clients",
 								"method": "GET",
 								"header": [
 									{
@@ -4688,24 +3798,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/clients",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"clients"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Create Client (Tenant)",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/clients",
 								"method": "POST",
 								"header": [
 									{
@@ -4721,24 +3825,14 @@
 									"mode": "raw",
 									"raw": "{\n    \"name\": \"myClientName\",\n    \"description\": \"optionalDescription\",\n    \"grants\": \"app\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/clients",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"clients"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Remove Client (Tenant)",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/clients/c2c848f9-0506-4df0-ba0a-dbe23c6c0b5f",
 								"method": "DELETE",
 								"header": [
 									{
@@ -4750,25 +3844,14 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/clients/c2c848f9-0506-4df0-ba0a-dbe23c6c0b5f",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"clients",
-										"c2c848f9-0506-4df0-ba0a-dbe23c6c0b5f"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Get Roles",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/roles",
 								"method": "GET",
 								"header": [
 									{
@@ -4780,24 +3863,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/roles",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"roles"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Forgot Password",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/password-resets",
 								"method": "POST",
 								"header": [
 									{
@@ -4809,22 +3886,14 @@
 									"mode": "raw",
 									"raw": "{\"email\": \"email@provider.net\"}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/password-resets",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"password-resets"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Update User Password",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/password-resets/OGE2N2YxYWYtODFlMi00MGJhLTg3MjAtZDExNTJiYTQwZDhj",
 								"method": "PUT",
 								"header": [
 									{
@@ -4840,17 +3909,6 @@
 									"mode": "raw",
 									"raw": "{\n   \"email\": \"lilmermaid@underthesea.com\",\n   \"newPassword\": \"partofyourworld\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/password-resets/OGE2N2YxYWYtODFlMi00MGJhLTg3MjAtZDExNTJiYTQwZDhj",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"password-resets",
-										"OGE2N2YxYWYtODFlMi00MGJhLTg3MjAtZDExNTJiYTQwZDhj"
-									]
-								},
 								"description": "Change the user's password"
 							},
 							"response": []
@@ -4858,6 +3916,7 @@
 						{
 							"name": "Change User Password",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/admin/users/4f838e86-a366-4971-8333-6f0bdd3942e5/password",
 								"method": "PUT",
 								"header": [
 									{
@@ -4873,32 +3932,13 @@
 									"mode": "raw",
 									"raw": "newPassword"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/admin/users/4f838e86-a366-4971-8333-6f0bdd3942e5/password",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"admin",
-										"users",
-										"4f838e86-a366-4971-8333-6f0bdd3942e5",
-										"password"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "AMQP Auth",
 							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}"
-									}
-								],
 								"url": {
 									"raw": "{{protocol}}{{url}}{{port}}/v1/amqp/user?username=admin&password=ludington12345",
 									"host": [
@@ -4918,50 +3958,53 @@
 											"key": "password",
 											"value": "ludington12345"
 										}
-									]
-								}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Get Email HMAC",
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
+								"url": "{{protocol}}{{url}}{{port}}/v1/email-hmac",
 								"method": "GET",
 								"header": [],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/email-hmac",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"email-hmac"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						}
-					]
+					],
+					"_postman_isSubFolder": true
 				},
 				{
 					"name": "Destination Ops",
+					"description": "",
 					"item": [
 						{
 							"name": "Test",
+							"description": "",
 							"item": [
 								{
 									"name": "Test Webhook Destination",
 									"request": {
+										"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/destination/webhook",
 										"method": "POST",
 										"header": [
 											{
@@ -4980,26 +4023,14 @@
 											"mode": "raw",
 											"raw": "{\n\t\"uri\": \"https://enyvolxl770mf.x.pipedream.net\",\n\t\"payload\": {\n\t\t\"key\": \"value\"\n\t}\n}"
 										},
-										"url": {
-											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/destination/webhook",
-											"host": [
-												"{{protocol}}{{url}}{{port}}"
-											],
-											"path": [
-												"v1",
-												"tenants",
-												"{{tenantId}}",
-												"test",
-												"destination",
-												"webhook"
-											]
-										}
+										"description": ""
 									},
 									"response": []
 								},
 								{
 									"name": "Test BigTable Destination",
 									"request": {
+										"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/destination/bigtable",
 										"method": "POST",
 										"header": [
 											{
@@ -5018,26 +4049,14 @@
 											"mode": "raw",
 											"raw": "{\n\t\"destinationId\": \"78da1c63-73d6-4e24-88f0-976088ab1a54\",\n\t\"payload\": {\n\t\t\"key\": \"value\"\n\t}\n}"
 										},
-										"url": {
-											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/destination/bigtable",
-											"host": [
-												"{{protocol}}{{url}}{{port}}"
-											],
-											"path": [
-												"v1",
-												"tenants",
-												"{{tenantId}}",
-												"test",
-												"destination",
-												"bigtable"
-											]
-										}
+										"description": ""
 									},
 									"response": []
 								},
 								{
 									"name": "Test Keen Destination",
 									"request": {
+										"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/destination/keen",
 										"method": "POST",
 										"header": [
 											{
@@ -5056,26 +4075,14 @@
 											"mode": "raw",
 											"raw": "{\n\t\"destinationId\": \"cf78f959-e5da-4fc9-8cc3-aa948866a7f6\",\n\t\"payload\": {\n\t\t\"key\": \"value\"\n\t}\n}"
 										},
-										"url": {
-											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/destination/keen",
-											"host": [
-												"{{protocol}}{{url}}{{port}}"
-											],
-											"path": [
-												"v1",
-												"tenants",
-												"{{tenantId}}",
-												"test",
-												"destination",
-												"keen"
-											]
-										}
+										"description": ""
 									},
 									"response": []
 								},
 								{
 									"name": "Test DynamoDb Destination",
 									"request": {
+										"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/destination/dynamodb",
 										"method": "POST",
 										"header": [
 											{
@@ -5094,26 +4101,14 @@
 											"mode": "raw",
 											"raw": "{\n\t\"destinationId\": \"cf78f959-e5da-4fc9-8cc3-aa948866a7f6\",\n\t\"payload\": {\n\t\t\"key\": \"value\"\n\t}\n}"
 										},
-										"url": {
-											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/destination/dynamodb",
-											"host": [
-												"{{protocol}}{{url}}{{port}}"
-											],
-											"path": [
-												"v1",
-												"tenants",
-												"{{tenantId}}",
-												"test",
-												"destination",
-												"dynamodb"
-											]
-										}
+										"description": ""
 									},
 									"response": []
 								},
 								{
 									"name": "Test Amqp Destination",
 									"request": {
+										"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/destination/amqp",
 										"method": "POST",
 										"header": [
 											{
@@ -5132,28 +4127,17 @@
 											"mode": "raw",
 											"raw": "{\n\t\"queue\": \"AllEvents\",\n\t\"payload\": {\n\t\t\"key\": \"value\"\n\t}\n}"
 										},
-										"url": {
-											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/destination/amqp",
-											"host": [
-												"{{protocol}}{{url}}{{port}}"
-											],
-											"path": [
-												"v1",
-												"tenants",
-												"{{tenantId}}",
-												"test",
-												"destination",
-												"amqp"
-											]
-										}
+										"description": ""
 									},
 									"response": []
 								}
-							]
+							],
+							"_postman_isSubFolder": true
 						},
 						{
 							"name": "List All Destinations",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations",
 								"method": "GET",
 								"header": [
 									{
@@ -5165,24 +4149,18 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"destinations"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "View Destination",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/15c5211b-8805-4fc2-9d41-5ff7517f27af",
 								"method": "GET",
 								"header": [
 									{
@@ -5194,36 +4172,17 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/15c5211b-8805-4fc2-9d41-5ff7517f27af",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"destinations",
-										"15c5211b-8805-4fc2-9d41-5ff7517f27af"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "View Destination Errors",
 							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}"
-									}
-								],
 								"url": {
 									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/15c5211b-8805-4fc2-9d41-5ff7517f27af/errors?from=2020-12-01T20:00:00z&to=2020-12-01T21:00:00z&pageNo=1&pageSize=100",
 									"host": [
@@ -5254,14 +4213,9 @@
 											"key": "pageSize",
 											"value": "100"
 										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "View Destination Status",
-							"request": {
+									],
+									"variable": []
+								},
 								"method": "GET",
 								"header": [
 									{
@@ -5273,26 +4227,41 @@
 										"value": "Bearer {{token}}"
 									}
 								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/558d2830-a6b2-490c-9d5c-d0d6e26021ef/status",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"destinations",
-										"558d2830-a6b2-490c-9d5c-d0d6e26021ef",
-										"status"
-									]
-								}
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "View Destination Status",
+							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/558d2830-a6b2-490c-9d5c-d0d6e26021ef/status",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Update Webhook Destination",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/webhook/15c5211b-8805-4fc2-9d41-5ff7517f27af",
 								"method": "PUT",
 								"header": [
 									{
@@ -5308,26 +4277,14 @@
 									"mode": "raw",
 									"raw": "{\n  \"name\": \"my-webhook-destination\",\n  \"url\": \"http://example.com\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/webhook/15c5211b-8805-4fc2-9d41-5ff7517f27af",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"destinations",
-										"webhook",
-										"15c5211b-8805-4fc2-9d41-5ff7517f27af"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Update Bigtable Destination",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/bigtable/15c5211b-8805-4fc2-9d41-5ff7517f27af",
 								"method": "PUT",
 								"header": [
 									{
@@ -5343,26 +4300,14 @@
 									"mode": "raw",
 									"raw": "{\n  \"name\": \"my-bigtable-destination\",\n  \"instanceId\": \"first-test\",\n  \"tableName\": \"tableName\",\n  \"cloudJson\": {\n\t  \"type\": \"service_account\",\n\t  \"project_id\": \"bigtable-testing-184714\",\n\t  \"private_key_id\": \"62ccd61bf47eb3f2ecd6af766f6562f475d362e2\",\n\t  \"private_key\": \"-----BEGIN PRIVATE KEY-----\\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDPmpjRkX/WnpMP\\nn+T6PXM0pUAawChxBEHUISVaFqOnkccLxzfNJ3r/BZ0E2GJS3+tPjoj7s33DCNXb\\nqePuaEqFJ7JtPVHGNzMOTsRk9cj1i/j7AWtBj9FzYoFr9OCGMXsq3WixGrmxIsvN\\nRL1cgTU12zFd8pxot1XNIyBHKaHB+U7/bKCYogFT970/DSU2jcO9zw57oKrxxJEG\\nRmNZclJk+FIY9Na0a1Twl6B3e09ZxOPB8JmAbjKOX0KmRQUBImbCTlanvPC2+Cwn\\njZEMSO+ehgf02aQ9Ug0RAMGi30/XS93FBGPm46fGP1dLmvHUBk8h0T07k1PeTCOJ\\nWR4FAWKDAgMBAAECggEAXtKwJlic2XyIk0RnI91Zd5xbEVzfm+9j2e5hzyo0Cd/N\\n2JVf6Xa0+TKpK4NiNZRNOINUEhNDyAeLFtAcadJ85yDgoIC3jx+7VDeqAKs65NzQ\\nFmXphYKZGmjN0G+C9gg3x7ZlkS8xzbSk/db93vitQzIg9FZSFopWyGHY5mgfmCbi\\nz42lxGCOntraDTY37C9txArq/3RHBkq/GwiU5fOXztwNw3tBs1hhjsU8gaxR8hzX\\nxdWht1a6MdElmZ+jRxYVfgKRVguXftogbFuqi/v4JpWOsUTPwF+oMiB+MzxcgXGg\\n70kohSkSTFL2LhemUMGhXAsBg6rMC6lpsGZqtk6DMQKBgQDpUAPPbq1+yg2Xsn3s\\nNfzEmYAXNzyzOEIylO7sCYRNPc/8883McXZjPOhf2azhatJyllsjNEx6ZYDumFNY\\nCMnB4q99Ck7gE1HedNoHHjKcyRVg0yRgSKp1ySmMjrYK9kTLMnvlOIr7cUGcGMCM\\n7i/uu2g4Hd4Se7QOfWDxoEckzQKBgQDjypnyRxBY4LByNcC62sV9eorfkxOSyY4X\\nK8f6jIatkzlCsY2NmazF/ZXgNXaNAhjb+xTF8ZyrRoQOjZmUsWLQ7vIIqeQbDU5c\\nApyg3rBdG9OkQEcWhDuxMgs8XhTHw0PXQ5Q2g+oDVGG3+VmUBEQzxxkChwz8XYks\\nPeVdxHMkjwKBgQDOct4cQ/xDb/kdHXUtegwjzww3/sm4cHSrG3xa4oTucF7Fntqh\\nKFkwsOmSPyQqBwMXIBKfER0HRSAUgDdnc8dLyBGu3Fs1DgNojA+NMtxoPcqr9cl/\\nZW1ocktQs8tD4ey3vQFCsIjSu8HppUFkszM41R4AYfVqd4m5NJp+1Gt/lQKBgQCc\\ngN9iQQbvOXihD2NaPeLAAkiVsTQaftZb/x2He7MwYF1QADM0HWhCI6csgy7vVIiF\\n4yzzjrvIRUuHwCvLqFAvImwyHZ92Ip86wiSgtj9PyUWQrQTqaHGmna5wjGcUlIjw\\nxiJ3jgxiuz/kKbIs6v184YbCYM1AOnd7aQ9EbCt76wKBgQDg6kALukpDc4TqF0o3\\nkUfb3bCQa706U9c2tr9j1CaTSFstmhEcg35SOM98RwJBfWlNisS+5cuvOl+dlTxA\\nMVR2FfwImT2xYxMBoV+2FZQKy0Efg2GANtaVYX+y7M8j4D8aStHcjpcjNn0HBqWb\\ngeT8dzQHmTCNQa9hLfDOX6o4fQ==\\n-----END PRIVATE KEY-----\\n\",\n\t  \"client_email\": \"example@bigtable-testing-184714.iam.gserviceaccount.com\",\n\t  \"client_id\": \"114420640089344752395\",\n\t  \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n\t  \"token_uri\": \"https://accounts.google.com/o/oauth2/token\",\n\t  \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n\t  \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/example%40bigtable-testing-184714.iam.gserviceaccount.com\"\n  }\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/bigtable/15c5211b-8805-4fc2-9d41-5ff7517f27af",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"destinations",
-										"bigtable",
-										"15c5211b-8805-4fc2-9d41-5ff7517f27af"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Update Keen Destination",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/keen/db6054c3-64e7-48df-bf97-5b3c6c6aecaf",
 								"method": "PUT",
 								"header": [
 									{
@@ -5378,26 +4323,14 @@
 									"mode": "raw",
 									"raw": "{\n  \"name\": \"my-keen-destination\",\n  \"keenProjectId\": \"59e64b84c9e77c00015738f9\",\n  \"keenWriteKey\": \"CEBD4E9945D1302F37919E6534DF321ABCE3F6340B09E60471281490767729081279FF2A772A869451ED8AD8CBD0243B3017D64FD16CA0F30A022C8950965070FB261D406D9AC4896F4FCF95F02A97CAAD908E8B55F8BF129C892D3B460815C\",\n  \"keenEventCollection\": \"streamName\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/keen/db6054c3-64e7-48df-bf97-5b3c6c6aecaf",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"destinations",
-										"keen",
-										"db6054c3-64e7-48df-bf97-5b3c6c6aecaf"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Update DynamoDb Destination",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/dynamodb/15c5211b-8805-4fc2-9d41-5ff7517f27af",
 								"method": "PUT",
 								"header": [
 									{
@@ -5413,26 +4346,14 @@
 									"mode": "raw",
 									"raw": "{\n  \"name\": \"my-dynamo-destination\",\n  \"awsClientId\": \"Ar3F2dH7Egr3\",\n  \"awsClientSecret\": \"sY4hRgi4EhY2In\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/dynamodb/15c5211b-8805-4fc2-9d41-5ff7517f27af",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"destinations",
-										"dynamodb",
-										"15c5211b-8805-4fc2-9d41-5ff7517f27af"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Create DynamoDb Destination",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/dynamodb",
 								"method": "POST",
 								"header": [
 									{
@@ -5448,25 +4369,14 @@
 									"mode": "raw",
 									"raw": "{\n  \"name\": \"my-dynamo-destination\",\n  \"awsClientId\": \"Ar3F2dH7Egr3\",\n  \"awsClientSecret\": \"sY4hRgi4EhY2In\",\n  \"awsRegion\": \"us-east-2\",\n  \"tableName\": \"table-name\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/dynamodb",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"destinations",
-										"dynamodb"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Create Keen Destination",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/keen",
 								"method": "POST",
 								"header": [
 									{
@@ -5482,25 +4392,14 @@
 									"mode": "raw",
 									"raw": "{\n  \"name\": \"my-keen-destination\",\n  \"keenProjectId\": \"59e64b84c9e77c00015738f9\",\n  \"keenWriteKey\": \"CEBD4E9945D1302F37919E6534DF321ABCE3F6340B09E60471281490767729081279FF2A772A869451ED8AD8CBD0243B3017D64FD16CA0F30A022C8950965070FB261D406D9AC4896F4FCF95F02A97CAAD908E8B55F8BF129C892D3B460815C\",\n  \"keenEventCollection\": \"streamName\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/keen",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"destinations",
-										"keen"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Create Bigtable Destination",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/bigtable",
 								"method": "POST",
 								"header": [
 									{
@@ -5516,25 +4415,14 @@
 									"mode": "raw",
 									"raw": "{\n  \"name\": \"my-bigtable-destination\",\n  \"instanceId\": \"first-test\",\n  \"tableName\": \"tableName\",\n  \"cloudJson\": {\n\t  \"type\": \"service_account\",\n\t  \"project_id\": \"bigtable-testing-184714\",\n\t  \"private_key_id\": \"62ccd61bf47eb3f2ecd6af766f6562f475d362e2\",\n\t  \"private_key\": \"-----BEGIN PRIVATE KEY-----\\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDPmpjRkX/WnpMP\\nn+T6PXM0pUAawChxBEHUISVaFqOnkccLxzfNJ3r/BZ0E2GJS3+tPjoj7s33DCNXb\\nqePuaEqFJ7JtPVHGNzMOTsRk9cj1i/j7AWtBj9FzYoFr9OCGMXsq3WixGrmxIsvN\\nRL1cgTU12zFd8pxot1XNIyBHKaHB+U7/bKCYogFT970/DSU2jcO9zw57oKrxxJEG\\nRmNZclJk+FIY9Na0a1Twl6B3e09ZxOPB8JmAbjKOX0KmRQUBImbCTlanvPC2+Cwn\\njZEMSO+ehgf02aQ9Ug0RAMGi30/XS93FBGPm46fGP1dLmvHUBk8h0T07k1PeTCOJ\\nWR4FAWKDAgMBAAECggEAXtKwJlic2XyIk0RnI91Zd5xbEVzfm+9j2e5hzyo0Cd/N\\n2JVf6Xa0+TKpK4NiNZRNOINUEhNDyAeLFtAcadJ85yDgoIC3jx+7VDeqAKs65NzQ\\nFmXphYKZGmjN0G+C9gg3x7ZlkS8xzbSk/db93vitQzIg9FZSFopWyGHY5mgfmCbi\\nz42lxGCOntraDTY37C9txArq/3RHBkq/GwiU5fOXztwNw3tBs1hhjsU8gaxR8hzX\\nxdWht1a6MdElmZ+jRxYVfgKRVguXftogbFuqi/v4JpWOsUTPwF+oMiB+MzxcgXGg\\n70kohSkSTFL2LhemUMGhXAsBg6rMC6lpsGZqtk6DMQKBgQDpUAPPbq1+yg2Xsn3s\\nNfzEmYAXNzyzOEIylO7sCYRNPc/8883McXZjPOhf2azhatJyllsjNEx6ZYDumFNY\\nCMnB4q99Ck7gE1HedNoHHjKcyRVg0yRgSKp1ySmMjrYK9kTLMnvlOIr7cUGcGMCM\\n7i/uu2g4Hd4Se7QOfWDxoEckzQKBgQDjypnyRxBY4LByNcC62sV9eorfkxOSyY4X\\nK8f6jIatkzlCsY2NmazF/ZXgNXaNAhjb+xTF8ZyrRoQOjZmUsWLQ7vIIqeQbDU5c\\nApyg3rBdG9OkQEcWhDuxMgs8XhTHw0PXQ5Q2g+oDVGG3+VmUBEQzxxkChwz8XYks\\nPeVdxHMkjwKBgQDOct4cQ/xDb/kdHXUtegwjzww3/sm4cHSrG3xa4oTucF7Fntqh\\nKFkwsOmSPyQqBwMXIBKfER0HRSAUgDdnc8dLyBGu3Fs1DgNojA+NMtxoPcqr9cl/\\nZW1ocktQs8tD4ey3vQFCsIjSu8HppUFkszM41R4AYfVqd4m5NJp+1Gt/lQKBgQCc\\ngN9iQQbvOXihD2NaPeLAAkiVsTQaftZb/x2He7MwYF1QADM0HWhCI6csgy7vVIiF\\n4yzzjrvIRUuHwCvLqFAvImwyHZ92Ip86wiSgtj9PyUWQrQTqaHGmna5wjGcUlIjw\\nxiJ3jgxiuz/kKbIs6v184YbCYM1AOnd7aQ9EbCt76wKBgQDg6kALukpDc4TqF0o3\\nkUfb3bCQa706U9c2tr9j1CaTSFstmhEcg35SOM98RwJBfWlNisS+5cuvOl+dlTxA\\nMVR2FfwImT2xYxMBoV+2FZQKy0Efg2GANtaVYX+y7M8j4D8aStHcjpcjNn0HBqWb\\ngeT8dzQHmTCNQa9hLfDOX6o4fQ==\\n-----END PRIVATE KEY-----\\n\",\n\t  \"client_email\": \"example@bigtable-testing-184714.iam.gserviceaccount.com\",\n\t  \"client_id\": \"114420640089344752395\",\n\t  \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n\t  \"token_uri\": \"https://accounts.google.com/o/oauth2/token\",\n\t  \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n\t  \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/example%40bigtable-testing-184714.iam.gserviceaccount.com\"\n  }\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/bigtable",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"destinations",
-										"bigtable"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Create Webhook Destination",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/webhook",
 								"method": "POST",
 								"header": [
 									{
@@ -5550,25 +4438,14 @@
 									"mode": "raw",
 									"raw": "{\n  \"name\": \"my-webhook-destination\",\n  \"url\": \"http://example.com\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/webhook",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"destinations",
-										"webhook"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Delete Destination",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/558d2830-a6b2-490c-9d5c-d0d6e26021ef",
 								"method": "DELETE",
 								"header": [
 									{
@@ -5584,25 +4461,14 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/558d2830-a6b2-490c-9d5c-d0d6e26021ef",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"destinations",
-										"558d2830-a6b2-490c-9d5c-d0d6e26021ef"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Reset Destination",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/8e2af040-0ad6-4fe3-90b1-0645cdf95df7/resets",
 								"method": "POST",
 								"header": [
 									{
@@ -5618,25 +4484,34 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/8e2af040-0ad6-4fe3-90b1-0645cdf95df7/resets",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"destinations",
-										"8e2af040-0ad6-4fe3-90b1-0645cdf95df7",
-										"resets"
-									]
-								}
+								"description": ""
 							},
 							"response": [
 								{
+									"id": "b8940071-1d50-45c1-92a3-f8204ecd5236",
 									"name": "Reset Destination|With 200 OK",
 									"originalRequest": {
+										"url": {
+											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/:destinationid/resets",
+											"host": [
+												"{{protocol}}{{url}}{{port}}"
+											],
+											"path": [
+												"v1",
+												"tenants",
+												"{{tenantId}}",
+												"destinations",
+												":destinationid",
+												"resets"
+											],
+											"query": [],
+											"variable": [
+												{
+													"key": "destinationid",
+													"value": "8e2af040-0ad6-4fe3-90b1-0645cdf95df7"
+												}
+											]
+										},
 										"method": "POST",
 										"header": [
 											{
@@ -5652,30 +4527,12 @@
 											"mode": "raw",
 											"raw": ""
 										},
-										"url": {
-											"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/destinations/:destinationid/resets",
-											"host": [
-												"{{protocol}}{{url}}{{port}}"
-											],
-											"path": [
-												"v1",
-												"tenants",
-												"{{tenantId}}",
-												"destinations",
-												":destinationid",
-												"resets"
-											],
-											"variable": [
-												{
-													"key": "destinationid",
-													"value": "8e2af040-0ad6-4fe3-90b1-0645cdf95df7"
-												}
-											]
-										}
+										"description": ""
 									},
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Server",
@@ -5707,28 +4564,46 @@
 								}
 							]
 						}
-					]
+					],
+					"_postman_isSubFolder": true
 				},
 				{
 					"name": "Trip and Drive Ops",
+					"description": "",
 					"item": [
 						{
 							"name": "List Trips (Tenant)",
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/trips",
 								"method": "GET",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "List Trips (Admin)",
+							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/admin/test/trips",
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get Trip (Tenant)",
+							"request": {
 								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/trips",
+									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/trips/:tripid",
 									"host": [
 										"{{protocol}}{{url}}{{port}}"
 									],
@@ -5737,48 +4612,17 @@
 										"tenants",
 										"{{tenantId}}",
 										"test",
-										"trips"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "List Trips (Admin)",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
+										"trips",
+										":tripid"
+									],
+									"query": [],
+									"variable": [
 										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
+											"key": "tripid",
+											"value": ""
 										}
 									]
 								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/admin/test/trips",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"admin",
-										"test",
-										"trips"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get Trip (Tenant)",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
 								"method": "GET",
 								"header": [
 									{
@@ -5794,6 +4638,13 @@
 									"mode": "raw",
 									"raw": ""
 								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Trip (Tenant)",
+							"request": {
 								"url": {
 									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/trips/:tripid",
 									"host": [
@@ -5807,26 +4658,11 @@
 										"trips",
 										":tripid"
 									],
+									"query": [],
 									"variable": [
 										{
 											"key": "tripid",
 											"value": ""
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete Trip (Tenant)",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
 										}
 									]
 								},
@@ -5836,26 +4672,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/trips/:tripid",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"test",
-										"trips",
-										":tripid"
-									],
-									"variable": [
-										{
-											"key": "tripid",
-											"value": ""
-										}
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
@@ -5865,26 +4682,17 @@
 								{
 									"listen": "test",
 									"script": {
+										"type": "text/javascript",
 										"exec": [
 											"const jsonData = JSON.parse(responseBody);",
 											"postman.setEnvironmentVariable(\"trip-id\", jsonData.id);",
 											"tests[\"Trip ID Set\"] = jsonData.id === postman.getEnvironmentVariable(\"trip-id\");"
-										],
-										"type": "text/javascript"
+										]
 									}
 								}
 							],
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/trips",
 								"method": "POST",
 								"header": [
 									{
@@ -5898,19 +4706,7 @@
 									"mode": "raw",
 									"raw": "{\n\t\"name\": \"trip-name\",\n\t\"description\": \"trip-description\",\n\t\"events\": [\n\t\t{\n    \t\t\"eventBody\": {\n        \t\t\"tripNumber\": 76,\n        \t\t\"pidData\": {\n        \t\t\t\"EngineRpm\": 1410,\n        \t\t\t\"VehicleSpeed\": 45\n        \t\t}\n    \t\t},\n    \t\t\"eventType\": \"TcpRelativeTimeTripData\",\n    \t\t\"timestampOffset\": 0\n    \t}\n\t]\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/trips",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"test",
-										"trips"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
@@ -5920,26 +4716,17 @@
 								{
 									"listen": "test",
 									"script": {
+										"type": "text/javascript",
 										"exec": [
 											"const jsonData = JSON.parse(responseBody);",
 											"postman.setEnvironmentVariable(\"trip-id\", jsonData.id);",
 											"tests[\"Trip ID Set\"] = jsonData.id === postman.getEnvironmentVariable(\"trip-id\");"
-										],
-										"type": "text/javascript"
+										]
 									}
 								}
 							],
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
+								"url": "{{protocol}}{{url}}{{port}}/v1/admin/test/trips",
 								"method": "POST",
 								"header": [
 									{
@@ -5959,18 +4746,7 @@
 									"mode": "raw",
 									"raw": "{\n\t\"name\": \"trip-name\",\n\t\"description\": \"trip-description\",\n\t\"events\": [\n\t\t{\n    \t\t\"eventBody\": {\n        \t\t\"tripNumber\": 76,\n        \t\t\"pidData\": {\n        \t\t\t\"EngineRpm\": 1410,\n        \t\t\t\"VehicleSpeed\": 45\n        \t\t}\n    \t\t},\n    \t\t\"eventType\": \"TcpRelativeTimeTripData\",\n    \t\t\"timestampOffset\": 0\n    \t}\n\t]\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/admin/test/trips",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"admin",
-										"test",
-										"trips"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
@@ -5980,16 +4756,17 @@
 								{
 									"listen": "test",
 									"script": {
+										"type": "text/javascript",
 										"exec": [
 											"const jsonData = JSON.parse(responseBody);",
 											"postman.setEnvironmentVariable(\"drive-id\", jsonData.id);",
 											"tests[\"Drive ID Set\"] = jsonData.id === postman.getEnvironmentVariable(\"drive-id\");"
-										],
-										"type": "text/javascript"
+										]
 									}
 								}
 							],
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/drives",
 								"method": "POST",
 								"header": [
 									{
@@ -6007,28 +4784,14 @@
 									"mode": "raw",
 									"raw": "{\n\t\"tripId\": \"{{trip-id}}\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/drives",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"test",
-										"drives"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "List Drives",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/drives",
 								"method": "GET",
 								"header": [
 									{
@@ -6044,28 +4807,14 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/drives",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"test",
-										"drives"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Get Trip (Admin)",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/admin/test/trips/{{trip-id}}",
 								"method": "GET",
 								"header": [
 									{
@@ -6081,71 +4830,28 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/admin/test/trips/{{trip-id}}",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"admin",
-										"test",
-										"trips",
-										"{{trip-id}}"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Delete Trip (Admin)",
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/trips/{{trip-id}}",
 								"method": "DELETE",
 								"header": [],
 								"body": {
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/trips/{{trip-id}}",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"test",
-										"trips",
-										"{{trip-id}}"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Update Trip (Admin)",
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
+								"url": "{{protocol}}{{url}}{{port}}/v1/admin/test/trips/{{trip-id}}",
 								"method": "PUT",
 								"header": [
 									{
@@ -6159,28 +4865,14 @@
 									"mode": "raw",
 									"raw": "{\n\t\"name\": \"trip-name\",\n\t\"description\": \"trip-description\",\n\t\"events\": [\n\t\t{\n    \t\t\"eventBody\": {\n        \t\t\"tripNumber\": 76,\n        \t\t\"pidData\": {\n        \t\t\t\"EngineRpm\": 1410,\n        \t\t\t\"VehicleSpeed\": 45\n        \t\t}\n    \t\t},\n    \t\t\"eventType\": \"TcpRelativeTimeTripData\",\n    \t\t\"timestampOffset\": 0\n    \t}\n\t]\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/admin/test/trips/{{trip-id}}",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"admin",
-										"test",
-										"trips",
-										"{{trip-id}}"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Get Drive",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/drives/{{drive-id}}",
 								"method": "GET",
 								"header": [
 									{
@@ -6196,36 +4888,14 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/drives/{{drive-id}}",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"test",
-										"drives",
-										"{{drive-id}}"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Update Trip (Tenant)",
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/trips/{{trip-id}}",
 								"method": "PUT",
 								"header": [
 									{
@@ -6239,34 +4909,21 @@
 									"mode": "raw",
 									"raw": "{\n\t\"name\": \"trip-name\",\n\t\"description\": \"trip-description\",\n\t\"events\": [\n\t\t{\n    \t\t\"eventBody\": {\n        \t\t\"tripNumber\": 76,\n        \t\t\"pidData\": {\n        \t\t\t\"EngineRpm\": 1410,\n        \t\t\t\"VehicleSpeed\": 45\n        \t\t}\n    \t\t},\n    \t\t\"eventType\": \"TcpRelativeTimeTripData\",\n    \t\t\"timestampOffset\": 0\n    \t}\n\t]\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/test/trips/{{trip-id}}",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"test",
-										"trips",
-										"{{trip-id}}"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						}
-					]
+					],
+					"_postman_isSubFolder": true
 				},
 				{
 					"name": "Amqp Credentials",
+					"description": "",
 					"item": [
 						{
 							"name": "Get Credentials",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/amqp-credentials",
 								"method": "GET",
 								"header": [
 									{
@@ -6282,24 +4939,14 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/amqp-credentials",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"amqp-credentials"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Create Credential",
 							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/amqp-credentials",
 								"method": "POST",
 								"header": [
 									{
@@ -6315,39 +4962,13 @@
 									"mode": "raw",
 									"raw": "{\n\t\"name\": \"amqp-credential\"\n}"
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/amqp-credentials",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"tenants",
-										"{{tenantId}}",
-										"amqp-credentials"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						},
 						{
 							"name": "Delete Credential",
 							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
 									"raw": "{{protocol}}{{url}}{{port}}/v1/tenants/{{tenantId}}/amqp-credentials/0e2f35e6-b764-4239-8012-8b0fcc9ccb33:id?=0e2f35e6-b764-4239-8012-8b0fcc9ccb33",
 									"host": [
@@ -6365,73 +4986,9 @@
 											"key": "",
 											"value": "0e2f35e6-b764-4239-8012-8b0fcc9ccb33"
 										}
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Message of the Day",
-					"item": [
-						{
-							"name": "Get Message of the Day",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/motd",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
 									],
-									"path": [
-										"v1",
-										"motd"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Set Message of the Day",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"date\": \"A nice date string like 'October 21, 2019 8pm to 8.30pm\",\n\t\"url\": \"https://some-more-info.com\",\n\t\"message\": \"A nice message describing how the system will be down for maintenance at 8pm\"\n}"
+									"variable": []
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/motd",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"motd"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete Message of the Day",
-							"request": {
 								"method": "DELETE",
 								"header": [
 									{
@@ -6447,54 +5004,110 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "{{protocol}}{{url}}{{port}}/v1/motd",
-									"host": [
-										"{{protocol}}{{url}}{{port}}"
-									],
-									"path": [
-										"v1",
-										"motd"
-									]
-								}
+								"description": ""
 							},
 							"response": []
 						}
-					]
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Message of the Day",
+					"description": "",
+					"item": [
+						{
+							"name": "Get Message of the Day",
+							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/motd",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Set Message of the Day",
+							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/motd",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"date\": \"A nice date string like 'October 21, 2019 8pm to 8.30pm\",\n\t\"url\": \"https://some-more-info.com\",\n\t\"message\": \"A nice message describing how the system will be down for maintenance at 8pm\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Message of the Day",
+							"request": {
+								"url": "{{protocol}}{{url}}{{port}}/v1/motd",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
 				},
 				{
 					"name": "Version(remove)",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/version",
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/version",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"version"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Health Check",
 					"request": {
+						"url": "{{protocol}}{{url}}{{port}}/v1/health",
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/health",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"health"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				}
@@ -6502,44 +5115,33 @@
 		},
 		{
 			"name": "Services",
+			"description": "",
 			"item": [
 				{
 					"name": "Version",
 					"request": {
+						"url": "http://{{servicesUrl}}:{{servicesPort}}/v1/version",
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://{{servicesUrl}}:{{servicesPort}}/v1/version",
-							"protocol": "http",
-							"host": [
-								"{{servicesUrl}}"
-							],
-							"port": "{{servicesPort}}",
-							"path": [
-								"v1",
-								"version"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Health Check",
 					"request": {
+						"url": "http://{{servicesUrl}}:{{servicesPort}}/v1/health",
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://{{servicesUrl}}:{{servicesPort}}/v1/health",
-							"protocol": "http",
-							"host": [
-								"{{servicesUrl}}"
-							],
-							"port": "{{servicesPort}}",
-							"path": [
-								"v1",
-								"health"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				}
@@ -6547,10 +5149,12 @@
 		},
 		{
 			"name": "Testing",
+			"description": "",
 			"item": [
 				{
 					"name": "Get Simulation Status",
 					"request": {
+						"url": "http://localhost:9000/v1/simulation/status",
 						"method": "GET",
 						"header": [
 							{
@@ -6558,25 +5162,18 @@
 								"value": "Bearer {{token}}"
 							}
 						],
-						"url": {
-							"raw": "http://localhost:9000/v1/simulation/status",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "9000",
-							"path": [
-								"v1",
-								"simulation",
-								"status"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Alex GPS",
 					"request": {
+						"url": "http://mesos_slave_azuga_web-us-east-1-staging-danlaw.hub.bitbrew.com:9000/tripdata/",
 						"method": "POST",
 						"header": [
 							{
@@ -6592,27 +5189,14 @@
 							"mode": "raw",
 							"raw": "{\n \"notificationType\": \"gps\",\n \"deviceId\": \"deviceID\",\n \"data\": {\n   \"latitude\": 46.497,\n   \"longitude\": 20.0402,\n   \"heading\": 360\n }\n}"
 						},
-						"url": {
-							"raw": "http://mesos_slave_azuga_web-us-east-1-staging-danlaw.hub.bitbrew.com:9000/tripdata/",
-							"protocol": "http",
-							"host": [
-								"mesos_slave_azuga_web-us-east-1-staging-danlaw",
-								"hub",
-								"bitbrew",
-								"com"
-							],
-							"port": "9000",
-							"path": [
-								"tripdata",
-								""
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "VTS GPS sample",
 					"request": {
+						"url": "http://vtsdev.danlawinc.com/api/GPS/",
 						"method": "POST",
 						"header": [
 							{
@@ -6628,26 +5212,14 @@
 							"mode": "raw",
 							"raw": "{\n \"notificationType\": \"gps\",\n \"deviceId\": \"12345\",\n \"data\": {\n   \"latitude\": \"46.4979\",\n   \"longitude\": \"20.0402\",\n   \"heading\": \"360\"\n },\n \"time\": \"2\"\n}"
 						},
-						"url": {
-							"raw": "http://vtsdev.danlawinc.com/api/GPS/",
-							"protocol": "http",
-							"host": [
-								"vtsdev",
-								"danlawinc",
-								"com"
-							],
-							"path": [
-								"api",
-								"GPS",
-								""
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Start Simulation",
 					"request": {
+						"url": "http://{{url}}:9000/v1/simulation/1",
 						"method": "POST",
 						"header": [
 							{
@@ -6663,25 +5235,14 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": {
-							"raw": "http://{{url}}:9000/v1/simulation/1",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "9000",
-							"path": [
-								"v1",
-								"simulation",
-								"1"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Authorization example",
 					"request": {
+						"url": "http://{{url}}:{{port}}/v1/authexample",
 						"method": "GET",
 						"header": [
 							{
@@ -6689,17 +5250,9 @@
 								"value": "Bearer {{token}}"
 							}
 						],
-						"url": {
-							"raw": "http://{{url}}:{{port}}/v1/authexample",
-							"protocol": "http",
-							"host": [
-								"{{url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"v1",
-								"authexample"
-							]
+						"body": {
+							"mode": "raw",
+							"raw": ""
 						},
 						"description": "Requests access to a resource using an authentication token. "
 					},
@@ -6709,22 +5262,11 @@
 		},
 		{
 			"name": "Device Health",
+			"description": "",
 			"item": [
 				{
 					"name": "List Health Events (Admin)",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
 						"url": {
 							"raw": "{{protocol}}{{url}}{{port}}/v1/device-health/events?tenantId={{tenantId}}&deviceId={{deviceId}}&from=2019-01-01T00:00:01Z&to=2019-12-31T23:59:59Z",
 							"host": [
@@ -6752,26 +5294,22 @@
 									"key": "to",
 									"value": "2019-12-31T23:59:59Z"
 								}
-							]
-						}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "List Health Events (Tenant)",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
 						"url": {
 							"raw": "{{protocol}}{{url}}{{port}}/v1/device-health/tenants/{{tenantId}}/events?deviceId={{deviceId}}&from=2019-11-14T00:00:01Z&to=2019-11-20T23:59:59Z",
 							"host": [
@@ -6797,8 +5335,16 @@
 									"key": "to",
 									"value": "2019-11-20T23:59:59Z"
 								}
-							]
-						}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				},
@@ -6808,26 +5354,17 @@
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"postman.setEnvironmentVariable(\"jobId\", jsonData.id);",
 									"tests[\"Job ID Set\"] = jsonData.id === postman.getEnvironmentVariable(\"jobId\");"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
+						"url": "{{protocol}}{{url}}{{port}}/v1/device-health/spool-jobs",
 						"method": "POST",
 						"header": [
 							{
@@ -6841,71 +5378,25 @@
 							"mode": "raw",
 							"raw": "{\n\t\"deviceId\": \"{{deviceId}}\"\n}"
 						},
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/device-health/spool-jobs",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"device-health",
-								"spool-jobs"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "View Spool Job Status",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
+						"url": "{{protocol}}{{url}}{{port}}/v1/device-health/spool-jobs/{{jobId}}",
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{protocol}}{{url}}{{port}}/v1/device-health/spool-jobs/{{jobId}}",
-							"host": [
-								"{{protocol}}{{url}}{{port}}"
-							],
-							"path": [
-								"v1",
-								"device-health",
-								"spool-jobs",
-								"{{jobId}}"
-							]
-						}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
 					},
 					"response": []
 				}
 			]
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
 		}
 	]
 }
