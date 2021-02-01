@@ -3,14 +3,17 @@
 ## Postman
 
 We've created templates for relevant API calls that will accelerate your initial
-setup. You can download the Postman app [here](https://www.getpostman.com/).
+setup. You can clone this repository in your machine .You can download the Postman app [here](https://www.getpostman.com/).
 
-Once you have Postman open, import to Postman using the raw file links from this repository.
+Once you have Postman open, 
+1. Import the bbhub_prod.postman_collection.json.json file from the folder *PostmanProduction* in the Postman  from this repository.
 
 ![Import into Postman](import.png "Import into Postman")
 
-- Import our [bbhub collection](https://raw.githubusercontent.com/BitBrew/bbhub-postman/master/bbhub.postman_collection), which contains templates of our API calls.
-- Import our [bbhub environment](https://raw.githubusercontent.com/BitBrew/bbhub-postman/master/bbhub.postman_environment), where you can input parameters like your email, password, client ID and tenant ID so you don't have to keep entering them. Here's a tutorial on using [Postman environments](https://www.getpostman.com/docs/environments).
+
+2. Import bbhub_prod.postman_environment.json file in the postman envrionment where you can input parameters like your email, password, client ID and tenant ID so you don't have to keep entering them. Here's a tutorial on using [Postman environments](https://www.getpostman.com/docs/environments).
+
+![Import into Postman](import_env.gif "Import into Postman")
 
 ### Additional Parameters
 
